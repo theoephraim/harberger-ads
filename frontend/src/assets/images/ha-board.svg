@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="930px" height="521px" viewBox="0 0 930 521" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="933px" height="521px" viewBox="0 0 933 521" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
     <title>Group</title>
     <desc>Created with Sketch.</desc>
@@ -7,7 +7,7 @@
         <circle id="path-1" cx="16.5" cy="16.5" r="16.5"></circle>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Landing" transform="translate(-239.000000, -185.000000)">
+        <g id="Landing" transform="translate(-237.000000, -185.000000)">
             <g id="Group" transform="translate(229.000000, 185.000000)">
                 <path d="" id="Path-2" stroke="#979797"></path>
                 <rect id="Rectangle-Copy-2" stroke="#FFFFFF" x="365.087814" y="10.2981408" width="273.960573" height="156.346614"></rect>
@@ -33,12 +33,8 @@
                         </g>
                     </g>
                 </g>
-                <text id="H" transform="translate(24.153396, 504.941078) rotate(-54.000000) translate(-24.153396, -504.941078) " font-family="GTAmericaMono-Light, GT America Mono" font-size="36" font-weight="300" letter-spacing="-0.02932099" fill="#FFFFFF">
-                    <tspan x="12.6533958" y="519.441078">H</tspan>
-                </text>
-                <text id="A" transform="translate(932.556580, 266.255026) rotate(34.000000) translate(-932.556580, -266.255026) " font-family="GTAmericaMono-Light, GT America Mono" font-size="36" font-weight="300" letter-spacing="-0.02932099" fill="#FFFFFF">
-                    <tspan x="921.05658" y="280.755026">A</tspan>
-                </text>
+                <polygon id="H" fill="#FFFFFF" transform="translate(23.813396, 506.661078) rotate(-54.000000) translate(-23.813396, -506.661078) " points="31.8773958 493.881078 31.8773958 519.441078 29.1053958 519.441078 29.1053958 507.525078 18.5213958 507.525078 18.5213958 519.441078 15.7493958 519.441078 15.7493958 493.881078 18.5213958 493.881078 18.5213958 505.221078 29.1053958 505.221078 29.1053958 493.881078"></polygon>
+                <path d="M939.34458,280.755026 L936.86058,273.123026 L927.57258,273.123026 L925.08858,280.755026 L922.38858,280.755026 L930.66858,255.195026 L933.80058,255.195026 L942.08058,280.755026 L939.34458,280.755026 Z M928.32858,270.747026 L936.10458,270.747026 L935.88858,270.099026 C934.26858,265.095026 933.11658,261.027026 932.25258,257.679026 L932.18058,257.679026 C931.35258,261.027026 930.12858,265.095026 928.54458,270.099026 L928.32858,270.747026 Z" id="A" fill="#FFFFFF" transform="translate(932.234580, 267.975026) rotate(34.000000) translate(-932.234580, -267.975026) "></path>
             </g>
         </g>
     </g>
