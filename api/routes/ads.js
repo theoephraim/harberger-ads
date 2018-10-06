@@ -7,25 +7,22 @@ const { validate } = require('../lib/validation-helpers');
 
 module.exports = function initRoutes(router) {
   router.get('/ads', async (ctx, next) => {
-    const ads = await Models.Ad.findAll();
+    const ads = await Models.Ad.findAll({
+      where: { },
+    });
     ctx.body = ads;
   });
 
-
   router.param('adId', async (adId, ctx, next) => {
-    ctx.$.ad = await Models.Ad.findById(adId, {
-      include: [{
-        association: Models.Ad.association('advertiserUserId'),
-        required: true,
-      }],
-    });
+    ctx.$.ad = await Models.Ad.findById(adId);
     if (!ctx.$.ad) ctx.throw('NotFound', 'Ad does not exist');
 
     if (!ctx.$.superadmin && ctx.$.ad.advertiserUserId !== ctx.$.authUser.id) {
       ctx.throw('Forbidden', 'This ad is not yours');
     }
 
-    console.log(ctx.$.ad.refs.user.dataValues);
+    _.assign(ctx.$, await ctx.$.ad.populateRefs('billboard advertiserUser'));
+
     next();
   });
 
