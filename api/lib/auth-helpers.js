@@ -56,7 +56,9 @@ async function middleware(ctx, next) {
 }
 
 async function loggedInOnly(ctx, next) {
-  if (!ctx.$.authUser) ctx.throw('Forbidden', 'Must be logged in');
+  if (!ctx.$.superadmin && ctx.$.ad.advertiserUserId !== ctx.$.authUser.id) {
+    ctx.throw('Forbidden', 'This ad is not yours');
+  }
   return next();
 }
 

@@ -23,7 +23,16 @@ const initialState = {
   waitToPing: true,
   contractsDeployed: false,
 
-  messages: [],
+  messages: [{
+    id: 0,
+    title: 'Welcome',
+    msg: 'This is Harberger Ads',
+  }, {
+    id: 1,
+    title: 'Look around you',
+    msg: 'and profit',
+    type: 'progress',
+  }],
 
   authToken: null,
   user: {},
