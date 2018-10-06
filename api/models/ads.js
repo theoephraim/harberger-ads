@@ -7,15 +7,16 @@ module.exports = {
   tableName: 'ads',
   props: {
     id: 'id',
+    userId: { ref: 'User' },
     name: 'string',
     description: 'string',
     type: { type: 'string', enum: ['text', 'image', 'video'], default: 'text' },
     textContent: 'string',
     linkUrl: 'url',
     mediaUrl: 'url',
-    userId: { ref: 'User' },
   },
   virtualProps: {
+    user() { return this.refs.user; },
   },
   instanceMethods: {
   },

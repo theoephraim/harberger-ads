@@ -9,7 +9,7 @@ module.exports = {
     id: 'id',
     name: 'string',
     email: 'email',
-    xaddress: 'string',
+    xaddress: { type: 'string', public: false },
   },
   virtualProps: {
   },
