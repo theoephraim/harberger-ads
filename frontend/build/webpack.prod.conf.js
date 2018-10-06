@@ -32,7 +32,7 @@ function prerenderConfig(indexFile, routes) {
       sortAttributes: true
     },
     renderer: new PrerenderSPAPlugin.PuppeteerRenderer({
-      headless: true, // false to show browser while rendering for debugging!
+      headless: false, // false to show browser while rendering for debugging!
       renderAfterDocumentEvent: 'prerender-ready'
     })
   };
@@ -54,23 +54,23 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        compress: {
-          warnings: false
-        }
-      },
-      sourceMap: config.build.productionSourceMap,
-      parallel: true
-    }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: config.build.productionSourceMap
-        ? { safe: true, map: { inline: false } }
-        : { safe: true }
-    }),
+    // // http://vuejs.github.io/vue-loader/en/workflow/production.html
+    // new UglifyJsPlugin({
+    //   uglifyOptions: {
+    //     compress: {
+    //       warnings: false
+    //     }
+    //   },
+    //   sourceMap: config.build.productionSourceMap,
+    //   parallel: true
+    // }),
+    // // Compress extracted CSS. We are using this plugin so that possible
+    // // duplicated CSS from different components can be deduped.
+    // new OptimizeCSSPlugin({
+    //   cssProcessorOptions: config.build.productionSourceMap
+    //     ? { safe: true, map: { inline: false } }
+    //     : { safe: true }
+    // }),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
@@ -106,33 +106,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
 
     new PrerenderSPAPlugin(prerenderConfig('index.html', [
-      '/', '/faq', '/about', '/contact', '/terms', '/privacy', '/careers', '/dashboard', '/login', '/signup',
-      '/landing/vacation-rentals', '/landing/ecommerce',
-      '/landing/cratejoy', '/landing/harbortouch',
-      '/authorize.net', '/mutesix', '/adespresso',
-      '/404',
+      '/', '/404',
     ])),
-    new PrerenderSPAPlugin(prerenderConfig('admin.html', ['/admin'])),
   ]
 })
-
-if (config.build.productionGzip) {
-  const CompressionWebpackPlugin = require('compression-webpack-plugin')
-
-  webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
-      ),
-      threshold: 10240,
-      minRatio: 0.8
-    })
-  )
-}
 
 if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
