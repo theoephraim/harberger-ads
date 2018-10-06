@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import * as actions from './actions';
+import actions from './actions';
 import * as getters from './getters';
 import mutations from './mutations';
 
@@ -12,6 +12,18 @@ const initialState = {
   requests: {}, // keyed by request type (and sometimes more)
                 // each object having
                 // {status, error, requestedAt, receivedAt
+
+  // ETH address, if metamaskin'
+  account: null,
+  signatures: {},
+  // bloomID: null,
+  unlocked: false,
+
+  networkId: null,
+  waitToPing: true,
+  contractsDeployed: false,
+
+  messages: [],
 
   authToken: null,
   user: {},
