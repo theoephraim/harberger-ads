@@ -1,15 +1,6 @@
 <template lang='pug'>
 .main-wrap(:class='classes')
   .flex-wrap
-    header.header-bar
-      .popup-mask
-      router-link.main-logo(:to='{name: "home"}')
-        //- .main-logo.svg(v-html="require('@/assets/images/logo.png')")
-        img.main-logo(src='~assets/images/logo.png')
-      template(v-if='!noNav')
-        nav.main-nav
-          //- v-button.header-button(to-named-route='dashboard' theme='header') My Dashboard
-          //- router-link(:to='{name: "account"}' ) My Account
     .main-content
       slot
 </template>

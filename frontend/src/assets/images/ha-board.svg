@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="930px" height="521px" viewBox="0 0 930 521" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="16.5" cy="16.5" r="16.5"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing" transform="translate(-239.000000, -185.000000)">
+            <g id="Group" transform="translate(229.000000, 185.000000)">
+                <path d="" id="Path-2" stroke="#979797"></path>
+                <rect id="Rectangle-Copy-2" stroke="#FFFFFF" x="365.087814" y="10.2981408" width="273.960573" height="156.346614"></rect>
+                <rect id="Rectangle" stroke="#FFFFFF" fill="#1F1F1F" x="486.09319" y="123.26494" width="14.90681" height="256.057105"></rect>
+                <rect id="Rectangle-Copy" stroke="#FFFFFF" fill="#1F1F1F" x="356.566308" y="0.5" width="273.960573" height="156.346614"></rect>
+                <path d="M343,433.852424 C378.752999,372.342959 431.571919,337.644296 501.45676,329.756434 C571.341601,321.868572 624.160521,330.909746 659.91352,356.879956" id="Path-3" stroke="#FFFFFF" fill="#1F1F1F"></path>
+                <path d="M42,485.852424 C86.0839313,434.537445 138.902851,404.65264 200.45676,396.198008 C262.010669,387.743377 314.829589,391.970693 358.91352,408.879956" id="Path-3-Copy-2" stroke="#FFFFFF" fill="#1F1F1F"></path>
+                <path d="M591,328.852424 C630.772946,277.655305 680.591866,246.355311 740.45676,234.95244 C800.321655,223.549569 856.140575,229.192074 907.91352,251.879956" id="Path-3-Copy" stroke="#FFFFFF" fill="#1F1F1F"></path>
+                <path d="M505,35 L577,88" id="Path-6" stroke="#FFFFFF"></path>
+                <g id="Group-6" transform="translate(396.000000, 80.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Oval" stroke="#FFFFFF" xlink:href="#path-1"></use>
+                    <g id="Group-5" mask="url(#mask-2)" stroke="#FFFFFF" stroke-linecap="square">
+                        <g transform="translate(-16.000000, -7.000000)">
+                            <path d="M0.5,0.5 L75.5,19.5" id="Line"></path>
+                            <path d="M0.5,6.5 L75.5,25.5" id="Line-Copy"></path>
+                            <path d="M0.5,12.5 L75.5,31.5" id="Line-Copy-2"></path>
+                            <path d="M0.5,18.5 L75.5,37.5" id="Line-Copy-3"></path>
+                            <path d="M0.5,24.5 L75.5,43.5" id="Line-Copy-4"></path>
+                            <path d="M0.5,30.5 L75.5,49.5" id="Line-Copy-5"></path>
+                        </g>
+                    </g>
+                </g>
+                <text id="H" transform="translate(24.153396, 504.941078) rotate(-54.000000) translate(-24.153396, -504.941078) " font-family="GTAmericaMono-Light, GT America Mono" font-size="36" font-weight="300" letter-spacing="-0.02932099" fill="#FFFFFF">
+                    <tspan x="12.6533958" y="519.441078">H</tspan>
+                </text>
+                <text id="A" transform="translate(932.556580, 266.255026) rotate(34.000000) translate(-932.556580, -266.255026) " font-family="GTAmericaMono-Light, GT America Mono" font-size="36" font-weight="300" letter-spacing="-0.02932099" fill="#FFFFFF">
+                    <tspan x="921.05658" y="280.755026">A</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

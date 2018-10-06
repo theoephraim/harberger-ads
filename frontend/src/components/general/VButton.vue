@@ -40,7 +40,7 @@ export default {
     theme: {
       type: String,
       validator: (val) => BUTTON_THEMES.includes(val),
-      default: 'blue',
+      default: 'transparent-light',
     },
     href: String,           // passes through to <a>
     to: [String, Object],   // passes through to <router-link>
@@ -91,9 +91,10 @@ button.button {
 }
 
 .button {
+  font-family: @regular-font;
   display: inline-block;
   cursor: pointer;
-  border-radius: 3px;
+  // border-radius: 3px;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(0,0,0,0);
@@ -105,8 +106,8 @@ button.button {
   transition: .25s all;
 
   text-transform: uppercase;
-  font-weight: bold;
-  font-size: 12px;
+  // font-weight: bold;
+  // font-size: 12px;
 
   user-select: none;
   margin-right: 3px;
@@ -125,7 +126,6 @@ button.button {
     outline: none;
   }
   &:hover {
-
   }
 
   // Size options
