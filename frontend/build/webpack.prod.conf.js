@@ -32,7 +32,7 @@ function prerenderConfig(indexFile, routes) {
       sortAttributes: true
     },
     renderer: new PrerenderSPAPlugin.PuppeteerRenderer({
-      headless: false, // false to show browser while rendering for debugging!
+      headless: true, // false to show browser while rendering for debugging!
       renderAfterDocumentEvent: 'prerender-ready'
     })
   };
