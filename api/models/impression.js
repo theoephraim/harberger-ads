@@ -3,8 +3,8 @@
 */
 
 module.exports = {
-  modelName: 'AdImpression',
-  tableName: 'ad_impressions',
+  modelName: 'Impression',
+  tableName: 'impressions',
   props: {
     id: 'id',
     adId: { ref: 'Ad' },

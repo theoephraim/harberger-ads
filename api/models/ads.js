@@ -7,7 +7,7 @@ module.exports = {
   tableName: 'ads',
   props: {
     id: 'id',
-    userId: { ref: 'User' },
+    advertiserUserId: { ref: 'User' },
     name: 'string',
     description: 'string',
     type: { type: 'string', enum: ['text', 'image', 'video'], default: 'text' },

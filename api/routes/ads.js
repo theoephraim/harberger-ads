@@ -15,13 +15,15 @@ module.exports = function initRoutes(router) {
   router.param('adId', async (adId, ctx, next) => {
     ctx.$.ad = await Models.Ad.findById(adId, {
       include: [{
-        association: Models.Ad.association('userId'),
+        association: Models.Ad.association('advertiserUserId'),
         required: true,
       }],
     });
     if (!ctx.$.ad) ctx.throw('NotFound', 'Ad does not exist');
 
-    if (!ctx.$.superadmin && ctx.$.ad.userId !== ctx.$.authUser.id) ctx.throw('Forbidden', 'This ad is not yours');
+    if (!ctx.$.superadmin && ctx.$.ad.advertiserUserId !== ctx.$.authUser.id) {
+      ctx.throw('Forbidden', 'This ad is not yours');
+    }
 
     console.log(ctx.$.ad.refs.user.dataValues);
     next();
