@@ -5,7 +5,7 @@
 
 <script>
 // TODO: different favicon?
-import faviconUrl from '@/assets/images/favicon.ico';
+import faviconUrl from '@/assets/images/favicon.png';
 
 const components = {
 };
