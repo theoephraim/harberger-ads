@@ -14,3 +14,6 @@ export const authHeader = ({ account, signatures }) => {
   if (!account || !signatures || !signatures[account]) return null;
   return `Basic ${btoa(`${account}:${signatures[account]}`)}`;
 };
+
+export const billboards = (state) => _.values(state.billboards);
+

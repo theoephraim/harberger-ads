@@ -63,4 +63,11 @@ export default {
     if (msgKey < 0) return;
     state.messages.splice(msgKey, 1);
   },
+
+
+  // API ACTIONS ///////////////////////////////////////////////////////////////
+  ...makeAsyncMutations(types.FETCH_BILLBOARDS, (state, { response }) => {
+    state.billboards = _.keyBy(response, 'id');
+  }),
+
 };

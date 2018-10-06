@@ -27,6 +27,8 @@ const initialState = {
 
   authToken: null,
   user: {},
+
+  billboards: {},
 };
 
 

@@ -7,22 +7,17 @@ const { validate } = require('../lib/validation-helpers');
 
 module.exports = function initRoutes(router) {
   router.get('/billboards', async (ctx, next) => {
-    const billboards = await Models.Billboard.findAll({
-      include: [{
-        association: Models.Billboard.association('activeAdId'),
-        required: false,
-      }],
+    const billboards = await Models.Billboard.findAll();
+    const ads = await Models.Ad.findAll({
+      where: { id: _.map(billboards, 'activeAdId') },
     });
+    const adsByid = _.keyBy(ads, 'id');
+    _.each(billboards, (b) => { b.refs.activeAd = adsByid[b.activeAdId]; });
     ctx.body = billboards;
   });
 
   router.param('billboardId', async (adId, ctx, next) => {
-    ctx.$.billboard = await Models.Billboard.findById(adId, {
-      include: [{
-        association: Models.Billboard.association('activeAdId'),
-        required: false,
-      }],
-    });
+    ctx.$.billboard = await Models.Billboard.findById(adId);
     if (!ctx.$.billboard) ctx.throw('NotFound', 'Ad does not exist');
 
     if (!ctx.$.superadmin && ctx.$.billboard.advertiserUserId !== ctx.$.authUser.id) {

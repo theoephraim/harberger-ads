@@ -177,4 +177,12 @@ export default {
     commit(types.ADD_MSG, msg);
     return msgId;
   },
+
+
+  // API ACTIONS ///////////////////////////////////////////////////////////////
+  fetchBillboards: makeAsyncAction(types.FETCH_BILLBOARDS, (ctx, payload) => ({
+    method: 'get',
+    url: '/billboards',
+  })),
+
 };

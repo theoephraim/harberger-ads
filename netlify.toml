@@ -7,7 +7,7 @@
 
 [build]
   base = "frontend"
-  publish = "dist"
+  publish = "frontend/dist"
   command = "npm run build"
   environment = { LOAD_ENV = "staging" }
 

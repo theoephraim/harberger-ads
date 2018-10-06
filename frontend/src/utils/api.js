@@ -24,24 +24,10 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
 api.interceptors.request.use((config) => {
-  if (config.url.match(/.*\/v[12]\/.*/)) {
-    // v1 and v2 use old api, which is expecting snake_case params
-    config.url = `${process.env.USE_API_PROXY ? '/api' : process.env.API_URL}${config.url}`;
-    config.data = decamelizeKeysDeep(config.data, '_');
-  } else {
-    // v3 uses new api
-    config.url = `${process.env.USE_API_PROXY ? '/napi' : process.env.NODE_API_URL}${config.url}`;
-  }
+  config.url = `/api${config.url}`;
   return config;
-});
-api.interceptors.response.use((response) => {
-  if (response.config.url.match(/.*\/v[12]\/.*/) &&
-    response.headers['content-type'].indexOf('application/json') === 0
-  ) {
-    response.data = camelizeKeysDeep(response.data);
-  }
-  return response;
 });
 
 export default api;

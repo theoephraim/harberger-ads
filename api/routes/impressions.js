@@ -17,13 +17,8 @@ module.exports = function initRoutes(router) {
 
   router.get('/c', async (ctx, next) => {
     const impressionId = ctx.request.query.i;
-    const impression = await Models.Impression.findById(impressionId, {
-      include: [{
-        association: Models.Impression.association('adId'),
-        required: true,
-      }],
-    });
-    const { ad } = impression.refs;
+    const impression = await Models.Impression.findById(impressionId);
+    const ad = await impression.populateRef('ad');
 
     await impression.update({ clickedAt: new Date() });
 

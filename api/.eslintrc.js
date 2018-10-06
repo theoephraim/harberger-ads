@@ -29,13 +29,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-plusplus': 0, // i++ OK :D
     'arrow-parens': ["error", "always"], // Forces `(thing) -> thing.x`
-    'no-param-reassign': ['error', {
-      props: true,
-      ignorePropertyModificationsFor: [
-        'ctx', // for koa
-        'refs', // for our Models populateRef stuff
-      ],
-    }],
+    'no-param-reassign': 'off',
     // sometimes it makes sense if you think the file will soon be expanded
     'import/prefer-default-export': 0,
     'radix': 0,
