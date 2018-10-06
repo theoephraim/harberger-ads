@@ -3,12 +3,11 @@
 */
 
 module.exports = {
-  modelName: 'Advertiser',
-  tableName: 'advertisers',
+  modelName: 'User',
+  tableName: 'users',
   props: {
     id: 'id',
     name: 'string',
-    description: 'string',
     email: 'email',
     xaddress: 'string',
   },

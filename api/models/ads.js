@@ -13,7 +13,7 @@ module.exports = {
     textContent: 'string',
     linkUrl: 'url',
     mediaUrl: 'url',
-    advertiserId: { ref: 'Advertiser' },
+    userId: { ref: 'User' },
   },
   virtualProps: {
   },
