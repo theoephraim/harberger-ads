@@ -1,0 +1,12 @@
+{
+  NODE_ENV: 'test'
+  APP_ENV: 'test'
+
+  RUN_MODES: 'API'
+
+  DB:
+    database: 'ha-db-tests'
+    password: 'hahaha'
+
+  PORT: 3339
+}

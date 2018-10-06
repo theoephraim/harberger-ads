@@ -1,0 +1,55 @@
+{
+  NODE_ENV: 'development'
+  APP_ENV: 'local'
+
+  APP_NAME: 'ha-ads'
+
+  WEBSITE_URL: 'http://localhost:7000'
+
+  HOST: '0.0.0.0'
+  PORT: 7777
+  API_URL: 'http://localhost:7777'
+  # API_NGROK_URL: 'https://xxxxxx.ngrok.io'  # set in locals to test webhooks
+
+  LOG_LEVEL: 'info'
+
+  API_VERSION:
+    current: '1.0.0'
+    min: '1.0.0'
+
+  BODY_LIMIT: '10mb'
+
+  DB:
+    host: 'localhost'
+    port: 5432
+    database: 'ha-db'
+    username: null
+    password: null
+    debug: false
+
+  DEFAULT_TZ: 'America/Los_Angeles'
+
+  JWT_SIGN_KEY: 'hahahahahahahahaahahahaha'
+
+
+  CRYPTO:
+    key: '1234567890ABCDEF1234567890ABCDEF'
+    iv: '1234567890ABCDEF'
+    cipher_name: 'aes-256-cbc'
+    encoding: 'base64strict'
+    disable: false
+
+
+  ################################
+  # EXTERNAL SERVICES
+  ################################
+
+  SENTRY:
+    dsn: ''  # add to enable sentry error tracking
+
+  ####################################################
+  # More options that you can add into your local file
+
+  # RESPONSE_DELAY: 5000  # Delay all respoonses - helpful for local UX dev
+
+}
