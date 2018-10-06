@@ -20,9 +20,7 @@ module.exports = function initRoutes(router) {
     if (!ctx.$.superadmin && ctx.$.ad.advertiserUserId !== ctx.$.authUser.id) {
       ctx.throw('Forbidden', 'This ad is not yours');
     }
-
     _.assign(ctx.$, await ctx.$.ad.populateRefs('billboard advertiserUser'));
-
     next();
   });
 

@@ -24,12 +24,9 @@ module.exports = {
       optionalDependencies: ['test/unit/index.js']
     }],
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-unused-vars': process.env.NODE_ENV === 'production'
-      ? ['warn', { "args": "none" }]
-      : 'off'
-    ,
+    'no-debugger': 'off',
+    'no-console': 'off',
+    'no-unused-vars': 'off',
     'no-plusplus': 0, // i++ OK :D
     'arrow-parens': ["error", "always"], // Forces `(thing) -> thing.x`
     'no-param-reassign': ['error', {

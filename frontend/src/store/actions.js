@@ -21,7 +21,7 @@ const signingParams = [
   {
     type: 'string',
     name: 'Message',
-    value: 'To avoid bad things, sign below to authenticate with Clovers',
+    value: 'Sign in with HA',
   },
 ];
 const networks = {
