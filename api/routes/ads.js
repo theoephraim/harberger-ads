@@ -11,7 +11,6 @@ module.exports = function initRoutes(router) {
     ctx.body = ads;
   });
 
-
   router.param('adId', async (adId, ctx, next) => {
     ctx.$.ad = await Models.Ad.findById(adId, {
       include: [{
