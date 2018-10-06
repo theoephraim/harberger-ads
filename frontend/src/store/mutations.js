@@ -26,4 +26,41 @@ export default {
     state.loggedInAdmin = null;
     storage.removeItem('cb-admin-auth');
   },
+
+  [types.CONTRACTS_DEPLOYED]: (state, value) => {
+    state.contractsDeployed = value;
+  },
+  [types.UPDATE_WAIT_TO_PING]: (state, value) => {
+    state.waitToPing = value;
+  },
+
+  [types.SET_UNLOCKED]: (state, unlocked) => {
+    state.unlocked = unlocked;
+  },
+  [types.SET_ACCOUNT]: (state, account) => {
+    if (typeof account === 'string') {
+      account = account.toLowerCase();
+    }
+    state.account = account;
+  },
+  [types.SET_NETWORK]: (state, networkId) => {
+    state.networkId = networkId;
+  },
+
+  [types.SIGN_IN]: (state, { account, signature }) => {
+    state.signatures = { ...state.signatures, [account]: signature };
+  },
+  [types.SIGN_OUT]: (state) => {
+    // if (!state.account) return;
+    // Vue.delete(state.tokens, state.account);
+  },
+
+  [types.ADD_MSG]: (state, msg) => {
+    state.messages.push(msg);
+  },
+  [types.REMOVE_MSG]: (state, msgId) => {
+    const msgKey = state.messages.findIndex((m) => m.id === msgId);
+    if (msgKey < 0) return;
+    state.messages.splice(msgKey, 1);
+  },
 };
