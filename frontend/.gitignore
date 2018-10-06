@@ -1,0 +1,11 @@
+.DS_Store
+config/local.js
+node_modules/
+/dist/
+/screenshots
+npm-debug.log*
+/test/unit/coverage/
+/test/e2e/reports/
+selenium-debug.log
+/.vscode
+TODO

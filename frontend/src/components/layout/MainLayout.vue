@@ -1,0 +1,235 @@
+<template lang='pug'>
+.main-wrap(:class='classes')
+  .flex-wrap
+    header.header-bar
+      .popup-mask
+      router-link.main-logo(:to='{name: "home"}')
+        //- .main-logo.svg(v-html="require('@/assets/images/logo.png')")
+        img.main-logo(src='~assets/images/logo.png')
+      template(v-if='!noNav')
+        nav.main-nav
+          //- v-button.header-button(to-named-route='dashboard' theme='header') My Dashboard
+          //- router-link(:to='{name: "account"}' ) My Account
+    .main-content
+      slot
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+
+const components = {
+};
+
+export default {
+  name: 'MainLayout',
+  components,
+  props: {
+    fullWidth: Boolean,
+    noFixedHeader: Boolean,
+    noFooter: Boolean,
+    noNav: Boolean,
+  },
+  data() {
+    return {
+      program: {},
+    };
+  },
+  computed: {
+    classes() {
+      return {
+        'full-width': this.fullWidth,
+        'no-fixed-header': this.noFixedHeader,
+        'no-footer': this.noFooter,
+      };
+    },
+  },
+  methods: {
+  },
+};
+</script>
+
+<style lang='less'>
+
+@header-bar-height--desktop: 60px;
+@header-bar-height--mobile: 50px;
+
+// this flex stuff sets up the sticky footer
+.main-wrap {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.flex-wrap {
+  flex: 1 0 auto;
+}
+.header-button {
+  height: 40px;
+  border-radius: 2px;
+  margin: 0 14px;
+}
+.flex-bar {
+  height: @header-bar-height--desktop;
+  padding: 15px 12px;
+  > div {
+    min-width: 100px;
+    height: @header-bar-height--desktop;
+    color: black;
+    display: inline-block;
+    justify-content: center;
+    line-height: @header-bar-height--desktop;
+    vertical-align: middle;
+  }
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  height: @header-bar-height--desktop;
+  padding: 15px 12px;
+  color: white;
+  text-align: left;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  a {
+    color: white;
+  }
+  @media @mq-small-only {
+    height: @header-bar-height--mobile;
+    padding: 0;
+    position: relative;
+  }
+  .main-wrap.no-fixed-header & {
+    position: relative;
+  }
+}
+
+.main-logo {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  width: auto;
+  display: flex;
+  @media @mq-small-only {
+    margin-left: 5px;
+  }
+
+  > svg {
+    display: block;
+    fill: black;
+    height: 100%;
+    max-width: 40vw;
+    transition: 0.5s all;
+  }
+  &:hover {
+    > svg {
+      fill: @blue-green;
+    }
+  }
+}
+.main-nav {
+  float: right;
+  height: 100%;
+
+  // padding-top: 6px;
+
+  &.main-nav__mobile {
+    display: none;
+    @media @mq-small-only {
+      display: block;
+
+      .button {
+        margin-top: 7px;
+        margin-right: 7px;
+        height: @header-bar-height--mobile - 2*7;
+        line-height: @header-bar-height--mobile - 2*7;
+        padding: 0 15px;
+
+      }
+
+    }
+  }
+  &.main-nav__desktop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 30px;
+    height: @header-bar-height--desktop;
+    @media @mq-small-only {
+      display: none;
+    }
+  }
+  a {
+    display: flex;
+    justify-content: center;
+    &:hover {
+      text-shadow: -0.06ex 0 black, 0.06ex 0 black;
+      transition: .2s all;
+    }
+    //min-width: 53px;
+  }
+  a, .button {
+    font-size: 16px;
+    text-transform: capitalize;
+    margin-left: 25px;
+    color: #242849;
+    text-decoration: none;
+
+    &.router-link-active {
+    }
+  }
+
+  .nav-icon-button {
+    width: @header-bar-height--desktop;
+    height: @header-bar-height--desktop;
+    text-align: center;
+    vertical-align: middle;
+    float: right;
+
+    svg {
+      margin-top: 25%;
+      height: 50%;
+      width: 50%;
+    }
+
+    @media @mq-small-only {
+      width: @header-bar-height--mobile;
+      height: @header-bar-height--mobile;
+    }
+  }
+}
+.main-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 25px;
+  padding-top: 60px;
+  padding-bottom:0px;
+
+  @media @mq-small-only {
+    //padding: 10px;
+    padding-top: 0;
+  }
+
+
+  .full-width & {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .main-wrap.no-fixed-header & {
+    padding-top: 0;
+  }
+}
+
+
+
+</style>
