@@ -24,7 +24,6 @@ module.exports = function initRoutes(router) {
       ctx.throw('Forbidden', 'This ad is not yours');
     }
 
-    console.log(ctx.$.ad.refs.user.dataValues);
     next();
   });
 

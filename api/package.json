@@ -90,8 +90,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:nofix",
-      "pre-push": "npm run lint:strict && npm run test:once"
+      "pre-commit": "npm run lint:nofix"
     }
   },
   "jest": {
