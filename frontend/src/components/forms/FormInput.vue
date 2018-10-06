@@ -394,7 +394,7 @@ export default {
   padding: 9px 8px 7px;
   height: 40px;
   color: #444;
-  border-radius: 2px;
+  // border-radius: 2px;
   font: inherit;
 
   textarea& {
@@ -451,7 +451,6 @@ export default {
   display: block;
   padding-bottom: 4px;
   padding-left: 0px;
-  font-weight: bold;
   // &:empty {
   //   height: 28px;
   //   @media @mq-small-only {

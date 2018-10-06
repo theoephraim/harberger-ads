@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600');
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,600');
 
 
 
-@h1-font-size: 44;
-@h2-font-size: 36;
-@h3-font-size: 26;
-@h4-font-size: 22;
+@h1-font-size: 18;
+@h2-font-size: 18;
+@h3-font-size: 18;
+@h4-font-size: 18;
 @h5-font-size: 12;
 @h6-font-size: 10;
 
 
 body, html {
-  color: @bluegray-text;
+  color: white;
   font-family: @regular-font;
-  font-weight: normal;
+  font-weight: 300;
   font-style: normal;
   line-height: @default-line-height*100%;
 
@@ -24,12 +24,13 @@ body, html {
 
 /* Default header styles */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  // font-weight: normal;
+  font-weight: 300;
   // .light-weight();
   margin: .5em 0;
   line-height: 1.5em;
-  color: @black;
+  color: @type-light;
   font-family: @fancy-font;
+  font-size: 1em;
 
   small {
     font-size: .85em;
@@ -145,16 +146,16 @@ h5 {
 }
 .light-weight {
   // We dont have a light weight for now
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
 }
 .regular-weight {
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
 }
 .bold {
   // font-family: @bold-font;
-  font-weight: 600;
+  font-weight: 300;
   font-style: normal;
 }
 .italic {

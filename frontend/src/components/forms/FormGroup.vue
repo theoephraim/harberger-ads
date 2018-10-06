@@ -75,7 +75,7 @@ export default {
   padding: 0;
   // background: #F0F0F0;
   border: 1px solid rgba(0,0,0,.3);
-  border-radius: 3px;
+  // border-radius: 3px;
   // border: 3px solid #d8f8ff;
   // padding: 20px 10px;
 
@@ -115,7 +115,6 @@ export default {
   }
 }
 .form-group-label {
-  font-weight: bold;
   text-transform: uppercase;
   font-size: 11px;
   line-height: 1em;
