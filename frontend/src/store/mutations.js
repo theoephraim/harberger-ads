@@ -46,6 +46,7 @@ export default {
     state.signatures = null;
     state.account = null;
     storage.removeItem('ha-signatures');
+    state.searchFilter = null;
   },
 
   [types.ADD_MSG]: (state, msg) => {
@@ -55,6 +56,10 @@ export default {
     const msgKey = state.messages.findIndex((m) => m.id === msgId);
     if (msgKey < 0) return;
     state.messages.splice(msgKey, 1);
+  },
+
+  [types.SET_SEARCH_FILTER]: (state, val) => {
+    state.searchFilter = val;
   },
 
 

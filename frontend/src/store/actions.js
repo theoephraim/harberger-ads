@@ -220,6 +220,10 @@ export default {
     return msgId;
   },
 
+  setSearchFilter({ commit }, newVal) {
+    commit(types.SET_SEARCH_FILTER, newVal);
+  },
+
 
   // API ACTIONS ///////////////////////////////////////////////////////////////
 
