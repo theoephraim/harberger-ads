@@ -35,13 +35,16 @@
               type='container' noLabel=true
             ) {{ selectedBillboard.description || 'Billboard Description...' }}
 
+            //- v-button(@click="buy") Buy
+
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
+import { toWei } from '@/utils';
 
 const components = {
   Popup: require('@/components/general/Popup').default,
@@ -57,6 +60,7 @@ export default {
   },
   data() {
     return {
+      price: 0,
     };
   },
   computed: {
@@ -65,8 +69,19 @@ export default {
       fetchBillboardRequest: 'FETCH_BILLBOARD_DETAILS',
     }),
   },
+  methods: {
+    buy() {
+      this.buyBillboard({ id: this.billboardId, price: toWei(this.price) });
+    },
+
+    ...mapActions([
+      'buyBillboard',
+    ]),
+  },
   mounted() {
-    this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId });
+    this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId }).then(() => {
+      this.price = this.selectedBillboard && this.selectedBillboard.price;
+    });
   },
 };
 </script>

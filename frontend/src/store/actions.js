@@ -122,6 +122,7 @@ export default {
         HarbergerAdsContract.abi,
         HarbergerAdsContract.networks[state.networkId].address,
       );
+      console.log(HarbergerAdsContract.instance.methods);
       // console.log('instantiated HarbergerAdsContract', HarbergerAdsContract);
     } else {
       console.log(`${name} not deployed on this network`);
@@ -181,6 +182,29 @@ export default {
       throw new Error('No ETH account');
     }
     return HarbergerAdsContract.instance.methods.addProperty().send({
+      from: account,
+    });
+  },
+  async buyBillboard({ state, commit, dispatch }, { id, price }) {
+    console.log(id, price);
+    if (!(await dispatch('checkWeb3'))) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'Web3 not available',
+      });
+      throw new Error('Web3 not available');
+    }
+    const { account } = state;
+    if (!account) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'No ETH account to sign in with',
+      });
+      throw new Error('No ETH account');
+    }
+    return HarbergerAdsContract.instance.methods.buy(parseInt(id), price, price).send({
       from: account,
     });
   },
