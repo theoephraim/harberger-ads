@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 import HomePage from './components/pages/HomePage';
 import NotFoundPage from './components/pages/NotFoundPage';
+import NewListingOverlay from './components/pages/NewListingOverlay';
+import ListingDetailsOverlay from './components/pages/ListingDetailsOverlay';
 
 import store from './store';
 
@@ -16,7 +18,13 @@ const router = new Router({
     return savedPosition || { x: 0, y: 0 };
   },
   routes: [
-    { path: '/', name: 'home', component: HomePage },
+    {
+      path: '/', name: 'home', component: HomePage,
+      children: [
+        { path: 'listings/:billboardId', name: 'listing-details', component: ListingDetailsOverlay, props: true },
+        { path: 'list-your-space', name: 'new-listing', component: NewListingOverlay },
+      ],
+    },
     { path: '*', name: 'not-found', component: NotFoundPage },
   ],
 });

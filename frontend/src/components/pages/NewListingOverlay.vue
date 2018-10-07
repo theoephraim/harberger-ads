@@ -1,0 +1,93 @@
+<template lang='pug'>
+.overlay
+  .overlay-screen
+  .overlay-content
+    .overlay-header
+      router-link.overlay-exit(:to="{name: 'home'}") Back
+      h2 List Your Site
+    .left
+      form-row
+        form-input(
+          type='text' v-model='listing.name'
+          label='Name'
+        )
+      form-row
+        form-input(
+          type='text' v-model='listing.price'
+          label='Starting Price'
+        )
+        form-input(
+          type='int' :min='100' :max='1200' v-model='listing.pixelWidth'
+          label='Width (px)'
+        )
+        form-input(
+          type='int' :min='100' :max='1200' v-model='listing.pixelWidth'
+          label='Height (px)'
+        )
+      form-row
+        form-input(
+          type='url' v-model='listing.url'
+          label='URL'
+        )
+
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+
+import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
+import { mapRequestStatuses } from '@/utils/vuex-api-utils';
+
+const components = {
+  Popup: require('@/components/general/Popup').default,
+};
+
+export default {
+  components,
+  metaInfo: {
+    title: 'List your ad space',
+  },
+  data() {
+    return {
+      listing: {},
+    };
+  },
+  computed: {
+    ...mapGetters(['billboards']),
+    ...mapRequestStatuses({
+      fetchBillboardsRequest: 'FETCH_BILLBOARDS',
+    }),
+  },
+  mounted() {
+  },
+};
+</script>
+
+<style lang='less'>
+.overlay {
+
+}
+.overlay-screen {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.9);
+}
+
+.overlay-content {
+  position: absolute;
+  z-index: 200;
+  top: 10vh;
+  left: 20px;
+  right: 20px;
+}
+
+.new-listing {
+
+}
+
+
+</style>

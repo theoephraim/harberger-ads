@@ -25,9 +25,10 @@ module.exports = function initRoutes(router) {
     }
 
     ctx.$.ad = ctx.$.billboard.refs.activeAd;
-
-
-    console.log(ctx.$.ad.refs.user.dataValues);
     next();
+  });
+
+  router.get('/billboards/:billboardId', async (ctx, next) => {
+    ctx.body = ctx.$.billboard;
   });
 };

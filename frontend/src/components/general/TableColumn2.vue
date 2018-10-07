@@ -25,6 +25,7 @@ table-column(
     span(v-else-if='type === "percent"') {{ cellValue(row) | percent }}
     span(v-else-if='type === "money"') {{ cellValue(row) | currency }}
     span(v-else-if='type === "filesize"') {{ cellValue(row) | filesize }}
+    span(v-else-if='type === "numabbr"') {{ cellValue(row) | numabbr }}
     span(v-else) {{ cellValue(row) }}
 </template>
 

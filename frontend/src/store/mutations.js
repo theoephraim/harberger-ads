@@ -71,5 +71,8 @@ export default {
   ...makeAsyncMutations(types.FETCH_BILLBOARDS, (state, { response }) => {
     state.billboards = _.keyBy(response, 'id');
   }),
+  ...makeAsyncMutations(types.FETCH_BILLBOARD_DETAILS, (state, { response }) => {
+    state.selectedBillboard = response;
+  }),
 
 };

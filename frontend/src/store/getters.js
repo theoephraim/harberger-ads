@@ -16,4 +16,5 @@ export const authHeader = ({ account, signatures }) => {
 };
 
 export const billboards = (state) => _.values(state.billboards);
+export const selectedBillboard = (state) => state.selectedBillboard;
 

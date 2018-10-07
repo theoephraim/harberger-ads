@@ -24,26 +24,67 @@ const { Models, sequelize, dbReady } = require('../models');
   });
 
   const siteOwnerUser = await Models.User.create({
-    name: 'Site Owner',
-    email: 'siteowner@hads.xyz',
+    name: 'ETHSanFrancisco.com',
+    email: 'marketing@ethsf.com',
   });
 
   const exampleAd = await Models.Ad.create({
     adverstiserUserId: advertiserUser.id,
-    name: 'Buy this ad @ hads.xyz!',
+    name: 'Buy CryptoPuppies Now!',
     mediaUrl: 'https://placekitten.com/200/300',
     linkUrl: 'http://hads.xyz',
   });
 
+
   const billboard = await Models.Billboard.create({
     userId: siteOwnerUser.id,
-    name: 'hads.xyz top sidebar',
+    name: 'ETHSF.com - sidebar',
     currentAdId: exampleAd.id,
     url: 'https://hads.xyz',
     type: 'sidebar',
     pixelWidth: 200,
     pixelHeight: 500,
   });
+
+  const billboard2 = await Models.Billboard.create({
+    userId: siteOwnerUser.id,
+    name: 'ETHSF.com - banner',
+    currentAdId: exampleAd.id,
+    url: 'https://hads.xyz',
+    type: 'sidebar',
+    pixelWidth: 200,
+    pixelHeight: 500,
+  });
+
+  const billboard3 = await Models.Billboard.create({
+    userId: siteOwnerUser.id,
+    name: 'Fort Mason Community Garden',
+    currentAdId: exampleAd.id,
+    url: 'https://hads.xyz',
+    type: 'tv',
+    pixelWidth: 1200,
+    pixelHeight: 800,
+  });
+
+  const billboard4 = await Models.Billboard.create({
+    userId: siteOwnerUser.id,
+    name: 'some Ether site',
+    currentAdId: exampleAd.id,
+    url: 'https://hads.xyz',
+    type: 'sidebar',
+    pixelWidth: 200,
+    pixelHeight: 500,
+  });
+  const billboard5 = await Models.Billboard.create({
+    userId: siteOwnerUser.id,
+    name: 'Another',
+    currentAdId: exampleAd.id,
+    url: 'https://hads.xyz',
+    type: 'banner',
+    pixelWidth: 200,
+    pixelHeight: 500,
+  });
+
 
   console.log('\n\n DONE! \n\n\n'.green);
   process.exit();

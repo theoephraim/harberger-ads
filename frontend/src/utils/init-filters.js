@@ -43,3 +43,11 @@ Vue.filter('capitalize', (value) => {
   if (!value) return '---';
   return value.charAt(0).toUpperCase() + value.slice(1);
 });
+
+Vue.filter('numabbr', (value) => {
+  if (!value) return 0;
+  if (value < 1000) return value;
+  if (value < 1000000) return `${(value / 1000).toFixed(1)}K`;
+  return `${(value / 1000000).toFixed(2)}M`;
+});
+

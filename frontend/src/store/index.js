@@ -35,6 +35,7 @@ const initialState = {
   user: {},
 
   billboards: {},
+  selectedBillboard: {},
 };
 
 

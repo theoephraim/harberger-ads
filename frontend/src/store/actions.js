@@ -191,5 +191,9 @@ export default {
     method: 'get',
     url: '/billboards',
   })),
+  fetchBillboardDetails: makeAsyncAction(types.FETCH_BILLBOARD_DETAILS, (ctx, payload) => ({
+    method: 'get',
+    url: `/billboards/${payload.billboardId}`,
+  })),
 
 };

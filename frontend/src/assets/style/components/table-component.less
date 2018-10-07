@@ -62,14 +62,14 @@
   overflow-x: auto;
   margin: 1em 0;
   width: 100%;
-  border: solid 1px #ddd;
+  // border: solid 1px #ddd;
   border-bottom: none;
 }
 
 .table-component__table {
   min-width: 100%;
   border-collapse: collapse;
-  border-bottom: solid 1px #ddd;
+  // border-bottom: solid 1px #ddd;
   table-layout: fixed;
 }
 
@@ -84,7 +84,7 @@
 
 .table-component__table th,
 .table-component__table td {
-  padding: 5px 8px;
+  padding: 15px 8px;
   vertical-align: top;
   text-align: left;
 
@@ -94,15 +94,18 @@
 }
 
 .table-component__table th {
-  background-color: #666;
-  color: #DDD;
+  color: #FFFFFF;
   text-transform: uppercase;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: 11px;
+}
+
+.table-component__table tbody tr {
+  border-top: 1px solid @bordercolor;
 }
 
 .table-component__table tbody tr:nth-child(even) {
-  background-color: fade(#000, 4);
+  // background-color: fade(#000, 4);
 }
 
 .table-component__table a {
@@ -117,7 +120,7 @@
 .table-component__th--sort,
 .table-component__th--sort-asc,
 .table-component__th--sort-desc {
-  text-decoration: underline;
+  // text-decoration: underline;
   cursor: pointer;
   user-select: none;
   position: relative;

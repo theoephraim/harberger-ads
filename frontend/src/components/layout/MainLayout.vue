@@ -1,12 +1,21 @@
 <template lang='pug'>
 .main-wrap(:class='classes')
   .flex-wrap
+    .splash
+      .big-board(v-html="require('@/assets/images/ha-board.svg')")
+    .menu-bar
+      v-button(to-named-route='new-listing') Sell Ad Space
+      v-button Buy Ads
+      v-button(@click="signIn", v-if="!signedIn") Sign in
+      v-button(@click="signOut", v-else) Sign out
+
+
     .main-content
       slot
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapMutations, mapGetters } from 'vuex';
 
 const components = {
 };
@@ -26,6 +35,9 @@ export default {
     };
   },
   computed: {
+    signedIn() {
+      return !!this.$store.getters.authHeader;
+    },
     classes() {
       return {
         'full-width': this.fullWidth,
@@ -35,6 +47,12 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'signIn',
+    ]),
+    ...mapMutations({
+      signOut: 'SIGN_OUT',
+    }),
   },
 };
 </script>
@@ -198,9 +216,9 @@ export default {
   }
 }
 .main-content {
-  max-width: 1000px;
+  // max-width: 1000px;
   margin: 0 auto;
-  padding: 25px;
+  padding: 35px;
   padding-top: 60px;
   padding-bottom:0px;
 
@@ -218,6 +236,22 @@ export default {
 
   .main-wrap.no-fixed-header & {
     padding-top: 0;
+  }
+}
+
+
+.splash {
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  .big-board {
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    svg {
+      max-height: 100%;
+      max-width: 100%;
+    }
   }
 }
 

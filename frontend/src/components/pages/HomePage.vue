@@ -1,12 +1,6 @@
 <template lang='pug'>
 main-layout
-  .splash
-    .big-board(v-html="require('@/assets/images/ha-board.svg')")
-  .menu-bar
-    v-button Sell Ad Space
-    v-button Buy Ads
-    v-button(@click="signIn", v-if="!signedIn") Sign in
-    v-button(@click="signOut", v-else) Sign out
+  router-view
 
   div(v-if='!fetchBillboardsRequest.wasRequested || fetchBillboardsRequest.isPending')
     h2 Loading...
@@ -26,14 +20,25 @@ main-layout
       //-     .small.nowrap(v-if='row.settledAt') SET {{ row.settledAt | date }}
       //-     .small.nowrap(v-if='row.rejectedAt') REJ {{ row.rejectedAt | date }}
 
-      table-column2(label='Site Name' show='name')
+      table-column2(label='Ad Space Name' show='name')
+
+      table-column(label='Type' sort-by='type')
+        template(slot-scope='row')
+          div
+            | {{ row.type }}
+
+            span.tiny.italic  - {{ row.pixelWidth }} x {{ row.pixelHeight }}
+
+      table-column2(show='viewCount' label='Views' type='numabbr')
+      table-column2(show='clickCount' label='Clicks' type='numabbr')
 
       table-column2(show='price' label='Current Price' type='money')
+      table-column2(show='taxRate' label='Tax' type='percent')
+      table-column2(show='tradeCount' label='Trades' type='numabbr')
 
-      // table-column(label='Actions')
-      //   template(slot-scope='row')
-      //     v-button(:to='getAdvanceDetailsLinkTo(row.id)' size='small') Details
-
+      table-column(label='Actions')
+        template(slot-scope='row')
+          v-button(:to='{name: "listing-details", params: { listingId: row.id } }' size='small') Details
 
 </template>
 
@@ -43,8 +48,7 @@ import { mapActions, mapMutations, mapGetters } from 'vuex';
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
 
-const components = {
-};
+const components = {};
 
 export default {
   components,
@@ -57,22 +61,12 @@ export default {
     };
   },
   computed: {
-    signedIn() {
-      return !!this.$store.getters.authHeader;
-    },
-
     ...mapGetters(['billboards']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
     }),
   },
   methods: {
-    ...mapActions([
-      'signIn',
-    ]),
-    ...mapMutations({
-      signOut: 'SIGN_OUT',
-    }),
   },
   mounted() {
     this.$store.dispatch('fetchBillboards');
@@ -81,18 +75,5 @@ export default {
 </script>
 
 <style lang='less'>
-.splash {
-  height: 50vh;
-  display: flex;
-  align-items: center;
-  .big-board {
-    width: 80%;
-    height: 80%;
-    margin: 0 auto;
-    svg {
-      max-height: 100%;
-      max-width: 100%;
-    }
-  }
-}
+
 </style>
