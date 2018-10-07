@@ -24,6 +24,9 @@ module.exports = function initRoutes(router) {
       ctx.throw('Forbidden', 'This ad is not yours');
     }
 
+    ctx.$.currentAd = await ctx.$.billboard.populateRef('currentAd');
+    await ctx.$.billboard.loadStats();
+
     ctx.$.ad = ctx.$.billboard.refs.activeAd;
     next();
   });

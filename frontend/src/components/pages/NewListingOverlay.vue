@@ -3,7 +3,7 @@
   .overlay-screen
   .overlay-content(v-if="!processing")
     router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
-    h2.overlay-header List New Ad Space
+    h2.overlay-header List New Ad Space For Sale
     .overlay-form
       .half
         form-row
@@ -55,7 +55,7 @@
       :loading='createBillboardRequest.isPending' loading-text='Creating your new cash cow...'
       :disabled='$vv.$error || !userIsLoggedIn'
     ) Save
-    .login-notice(v-if='!userIsLoggedIn')
+    .overlay-under-cta(v-if='!userIsLoggedIn')
       p.small Please <a href='#' @click.prevent='$store.dispatch("signIn")'>finish authentication</a> via metamask
 
 
@@ -213,7 +213,7 @@ export default {
   font-weight: bold;
 }
 
-.login-notice {
+.overlay-under-cta {
   text-align: center;
 }
 

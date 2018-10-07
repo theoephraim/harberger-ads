@@ -27,15 +27,7 @@ main-layout
       :show-filter='false' :show-caption='false'
       filter-no-results='No ads match your search'
     )
-      //- table-column(label='Dates')
-      //-   template(slot-scope='row')
-      //-     .small.nowrap CRE {{ row.createdAt | date }}
-      //-     .small.nowrap(v-if='row.approvedAt') APR {{ row.approvedAt | date }}
-      //-     .small.nowrap(v-if='row.activatedAt') ACT {{ row.activatedAt | date }}
-      //-     .small.nowrap(v-if='row.settledAt') SET {{ row.settledAt | date }}
-      //-     .small.nowrap(v-if='row.rejectedAt') REJ {{ row.rejectedAt | date }}
-
-      table-column2(label='Ad Space Name' show='name')
+      table-column2(label='Property Name' show='name')
 
       table-column(label='Type' sort-by='type')
         template(slot-scope='row')
@@ -55,7 +47,7 @@ main-layout
         template(slot-scope='row')
           v-button.shadow(
             :to='{name: "listing-details", params: { billboardId: row.id } }'
-          ) Buy This Ad Space
+          ) Buy Ad Property
 </template>
 
 <script>
