@@ -160,15 +160,29 @@ export default {
   },
   mounted() {
     this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId }).then(() => {
-      this.formPayload.price = this.selectedBillboard.price + 1;
+      this.price = this.selectedBillboard && this.selectedBillboard.price;
     });
   },
   methods: {
+    buy() {
+      this.buyBillboard({ id: this.billboardId, price: toWei(this.price) });
+    },
+
+    ...mapActions([
+      'buyBillboard',
+    ]),
+    purchaseButtonHandler() {
+      if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
+      if (!this.showPurchaseForm) {
+        this.showPurchaseForm = true;
+      }
+
+      // if (this.$hasError()) return;
+    },
     async buttonHandler() {
       if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
       if (!this.showForm) {
         this.showForm = true;
-        return;
       }
 
       if (this.$hasError()) return;
