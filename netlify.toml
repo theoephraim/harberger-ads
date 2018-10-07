@@ -22,6 +22,8 @@
 [[redirects]]
   from = "/api/*"
   to = "http://165.227.25.201:7777/:splat"
+  status = 200
 [[redirects]]
   from = "/gapi/*"
   to = "http://104.198.242.70/harberger-ads/graphql/:splat"
+  status = 200
