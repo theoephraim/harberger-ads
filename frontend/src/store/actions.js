@@ -181,7 +181,7 @@ export default {
 
   fetchTheGraph: makeAsyncAction(types.FETCH_THE_GRAPH, (ctx, payload) => ({
     method: 'post',
-    url: '$graph',
+    url: '/gapi',
     params: {
       query: `{
         properties {
@@ -202,16 +202,16 @@ export default {
 
   fetchBillboards: makeAsyncAction(types.FETCH_BILLBOARDS, (ctx, payload) => ({
     method: 'get',
-    url: '/billboards',
+    url: '/api/billboards',
   })),
   fetchBillboardDetails: makeAsyncAction(types.FETCH_BILLBOARD_DETAILS, (ctx, payload) => ({
     method: 'get',
-    url: `/billboards/${payload.billboardId}`,
+    url: `/api/billboards/${payload.billboardId}`,
   })),
 
   createBillboard: makeAsyncAction(types.CREATE_BILLBOARD, (ctx, payload) => ({
     method: 'post',
-    url: '/billboards',
+    url: '/api/billboards',
   })),
 
 };
