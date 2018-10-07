@@ -16,49 +16,25 @@ const msgParams = [{
   value: 'Sign in with HA',
 }];
 
-function auth(wallet, signature) {
-  try {
-    const recovered = sigUtil.recoverTypedSignature({
-      data: msgParams,
-      sig: signature,
-    });
-    return wallet.toLowerCase() === recovered.toLowerCase();
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
-
 async function middleware(ctx, next) {
   const basic = basicAuth(ctx.req);
-  ctx.$.authUser = null;
-  if (basic && auth(basic.name, basic.pass)) {
-    let user = await Models.User.find({
-      where: { xaddress: basic.name.toLowerCase() },
-    });
-    if (!user) {
-      user = await Models.User.create({
-        xaddress: basic.name.toLowerCase(),
-      });
-    }
-    ctx.$.authUser = user;
-  }
-  if (!ctx.headers['x-auth']) {
-    // for local dev so you can hit GET routes in the browser
-    if (ALWAYS_SUPERADMIN) {
-      ctx.$.superadmin = true;
-    }
+  if (!basic) return next();
 
-    return next();
-  }
+  const address = basic.name.toLowerCase();
+  const sig = basic.pass;
+
+  const recoveredAddress = sigUtil.recoverTypedSignature({ data: msgParams, sig });
+  if (address !== recoveredAddress.toLowerCase()) ctx.throw('Forbidden', 'Invalid signature');
+
+  let user = await Models.User.findById(address);
+  if (!user) user = await Models.User.create({ id: address });
+  ctx.$.authUser = user;
 
   return next();
 }
 
 async function loggedInOnly(ctx, next) {
-  if (!ctx.$.superadmin && ctx.$.ad.advertiserUserId !== ctx.$.authUser.id) {
-    ctx.throw('Forbidden', 'This ad is not yours');
-  }
+  if (!ctx.$.authUser) ctx.throw('Forbidden', 'You must be logged in');
   return next();
 }
 

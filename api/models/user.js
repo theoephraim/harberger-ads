@@ -6,10 +6,9 @@ module.exports = {
   modelName: 'User',
   tableName: 'users',
   props: {
-    id: 'id',
+    id: { type: 'string', primaryKey: true }, // this is the public address
     name: 'string',
     email: 'email',
-    xaddress: { type: 'string', public: false },
   },
   virtualProps: {
   },

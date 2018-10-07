@@ -60,7 +60,6 @@ async function boot() {
   app.use(serializeResponse);
   app.use(authMiddleware);
 
-
   // load routes
   app.use(router.routes());
 

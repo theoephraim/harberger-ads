@@ -3,7 +3,8 @@
   .overlay-screen
   .overlay-content(v-if="!processing")
     router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
-    h2.overlay-header List New Ad Space For Sale
+    .overlay-header
+      h2 List New Ad Space For Sale
     .overlay-form
       .half
         form-row
@@ -184,6 +185,11 @@ export default {
 
 .overlay-header {
   text-align: center;
+  padding: 15px 0;
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .buttons {

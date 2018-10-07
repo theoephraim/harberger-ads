@@ -11,8 +11,7 @@ module.exports = {
   tableName: 'billboards',
   props: {
     id: 'id',
-    userId: { type: 'int', ref: 'User' },
-    currentAdId: { type: 'int', ref: 'Ad', noRefConstraint: true },
+    siteOwnerUserId: { type: 'string', ref: 'User' },
     name: 'string',
     description: 'string',
     type: { type: 'string', enum: ['sidebar', 'banner', 'text', 'tv'], default: 'banner' },
@@ -25,9 +24,19 @@ module.exports = {
     contractId: 'string',
   },
   virtualProps: {
-    currentAd() { return this.refs.currentAd; },
+    currentAd() { return this.refs.currentAd || {}; },
     clickCount() { return _.get(this.calcs, 'stats.clicks', 0); },
     viewCount() { return _.get(this.calcs, 'stats.views', 0); },
+  },
+  complexRefs: {
+    async currentAd() {
+      const a = await Models.Ad.find({
+        where: { billboardId: this.id },
+        order: [['createdAt', 'DESC']],
+      });
+      console.log(a);
+      return a;
+    },
   },
   instanceMethods: {
     async loadStats() {

@@ -31,13 +31,10 @@ export default {
     ],
   },
   methods: {
-    ...mapActions([
-      'poll',
-    ]),
   },
   mounted() {
     document.dispatchEvent(new Event('prerender-ready'));
-    this.poll();
+    this.$store.dispatch('poll');
   },
 };
 </script>

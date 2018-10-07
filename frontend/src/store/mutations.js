@@ -16,16 +16,6 @@ export default {
     state.user = response.user;
     storage.setItem('ha-auth', state.authToken);
   }),
-  [types.AUTH_FROM_STORAGE]: (state, token) => {
-    const decodedToken = jwtDecode(token);
-    state.adminAuthToken = token;
-    state.loggedInAdmin = { id: decodedToken.adminId, role: decodedToken.role };
-  },
-  [types.LOGOUT]: (state) => {
-    state.adminAuthToken = null;
-    state.loggedInAdmin = null;
-    storage.removeItem('cb-admin-auth');
-  },
 
   [types.CONTRACTS_DEPLOYED]: (state, value) => {
     state.contractsDeployed = value;
@@ -53,7 +43,8 @@ export default {
   },
   [types.SIGN_OUT]: (state) => {
     if (!state.account) return;
-    Vue.delete(state.signatures, state.account);
+    state.signatures = null;
+    state.account = null;
     storage.removeItem('ha-signatures');
   },
 
@@ -81,5 +72,10 @@ export default {
   ...makeAsyncMutations(types.CREATE_BILLBOARD, (state, { response }) => {
     Vue.set(state.billboards, response.id, response);
   }),
+  ...makeAsyncMutations(types.UPDATE_BILLBOARD_AD, (state, { response }) => {
+    state.billboards[response.id] = response;
+    state.selectedBillboard = response;
+  }),
+
 
 };

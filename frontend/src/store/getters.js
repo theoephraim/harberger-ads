@@ -10,6 +10,7 @@ export const requestStatus = asyncActionStatusGetter;
 
 export const userIsLoggedIn = (state, getters) => !!getters.authHeader;
 export const user = (state) => state.user;
+export const userAccountAddress = (state) => state.account;
 
 export const authHeader = ({ account, signatures }) => {
   if (!account || !signatures || !signatures[account]) return null;
