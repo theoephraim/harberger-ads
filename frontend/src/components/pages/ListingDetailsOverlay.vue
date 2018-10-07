@@ -2,7 +2,8 @@
 .overlay
   .overlay-screen
   .overlay-content(v-if="!processing")
-    router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
+    router-link.overlay-exit(:to="{name: 'home'}")
+      small.chiclet.caps ← Back
     .overlay-header
       h2 Ad Property Details
       .subtitle.tiny(v-if='userIsSiteOwner')
@@ -15,7 +16,7 @@
     template(v-else)
       .overlay-form.full-border
         .col-8
-          .current-ad.bg-circles
+          .current-ad.bg-pattern
             template(v-if='selectedBillboard.currentAd')
               img(:src='selectedBillboard.currentAd.mediaUrl')
               .link-url
@@ -267,6 +268,21 @@ export default {
   text-align: center;
   h2 { padding: 0; margin: 0; }
   p { margin: 0;}
+}
+.chiclet {
+  border: 1px solid @bordercolor;
+  // background: white;
+  // color: @black;
+  padding: 0.5em 2em;
+  border-radius: 5px;
+  display: block;
+  transition: 0.3s all ease-out;
+  &:hover {
+    color: @black;
+    background: white;
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0px 0px #888;
+  }
 }
 
 
