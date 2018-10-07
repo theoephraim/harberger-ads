@@ -184,8 +184,6 @@ export default {
       from: account,
     }).then((res) => {
       console.log(res);
-    }).catch((err) => {
-      console.log(err);
     });
   },
 
