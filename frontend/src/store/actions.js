@@ -163,7 +163,7 @@ export default {
     );
   },
 
-  async ensureWeb3Connected({ state }) {
+  async ensureWeb3Connected({ state, dispatch }) {
     if (!(await dispatch('checkWeb3'))) {
       dispatch('selfDestructMsg', {
         title: 'Error',

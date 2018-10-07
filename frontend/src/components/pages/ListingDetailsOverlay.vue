@@ -83,7 +83,7 @@
         p.small <a href='#' @click.prevent='showForm = false'>or cancel</a>
 
 
-      .embed-code.tiny(v-else-if='userIsBillboardOwner')
+      .embed-code(v-else-if='userIsBillboardOwner')
         h3 Embed code:
         pre #{"<iframe src='https://hads.xyz/?b={{billboardId}}'></iframe>"}
 
@@ -112,7 +112,11 @@ export default {
   },
   data() {
     return {
-      formPayload: {},
+      formPayload: {
+        price: null,
+        linkUrl: null,
+        mediaUrl: null,
+      },
       showForm: false,
     };
   },
@@ -142,7 +146,9 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId });
+    this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId }).then(() => {
+      this.formPayload.price = this.selectedBillboard.price + 1;
+    });
   },
   methods: {
     async buttonHandler() {
@@ -154,17 +160,17 @@ export default {
 
       if (this.$hasError()) return;
 
-      // if (!this.userIsBillboardOwner) {
-      //   await this.$store.dispatchAction('buyBillboard', {
-      //     billboardId: this.billboardId,
-      //     price: toWei(this.price),
-      //   });
-      // } else if (this.formPayload.price !== null) {
-      //   await this.$store.dispatchAction('setBillboardPrice', {
-      //     billboardId: this.billboardId,
-      //     price: toWei(this.price),
-      //   });
-      // }
+      if (!this.userIsBillboardOwner) {
+        await this.$store.dispatch('buyBillboard', {
+          billboardId: this.billboardId,
+          price: toWei(this.formPayload.price),
+        });
+      } else if (this.formPayload.price !== null) {
+        await this.$store.dispatch('setBillboardPrice', {
+          billboardId: this.billboardId,
+          price: toWei(this.formPayload.price),
+        });
+      }
 
       await this.$store.dispatch('updateBillboardAd', {
         billboardId: this.billboardId,
