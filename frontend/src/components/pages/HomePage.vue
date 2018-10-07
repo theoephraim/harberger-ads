@@ -38,7 +38,7 @@ main-layout
 
       table-column(label='Actions')
         template(slot-scope='row')
-          v-button(:to='{name: "listing-details", params: { listingId: row.id } }' size='small') Details
+          v-button(:to='{name: "listing-details", params: { billboardId: row.id } }' size='small') Details
 
 </template>
 

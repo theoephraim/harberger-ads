@@ -42,7 +42,6 @@ export default {
     }),
   },
   mounted() {
-    console.log('MOO');
     this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId });
   },
 };
