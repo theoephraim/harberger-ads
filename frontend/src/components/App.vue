@@ -20,7 +20,7 @@ export default {
   components,
   metaInfo: {
     title: 'admin', // default title
-    titleTemplate: '%s | ClearAdmin', // all titles use this template
+    titleTemplate: '%s | HA', // all titles use this template
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
