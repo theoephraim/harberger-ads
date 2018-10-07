@@ -102,6 +102,7 @@ export default {
 
 .main-content {
   // max-width: 1000px;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 35px;
   padding-top: 60px;

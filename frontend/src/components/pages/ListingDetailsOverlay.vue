@@ -205,7 +205,7 @@ export default {
       } catch (err) {
         console.log(err);
         this.processing = false;
-        return false;
+        return;
       }
 
       await this.$store.dispatch('updateBillboardAd', {

@@ -16,13 +16,12 @@ module.exports = function initRoutes(router) {
   router.get('/i', async (ctx, next) => {
     const billboardId = ctx.request.query.b;
     const billboard = await Models.Billboard.findById(billboardId);
-    if (!billboard) ctx.throw('NotFound');
 
-    const ad = await billboard.populateRef('currentAd');
+    const ad = billboard && await billboard.populateRef('currentAd');
     if (!ad) {
-      console.log('user fallback');
+      console.log('use fallback');
       ctx.response.body = fallbackSrc
-        .replace(/{HADS_URL}/g, WEBSITE_URL);
+        .replace(/{HADS_URL}/g, `${WEBSITE_URL}/listings/${billboardId}`);
       ctx.set('Content-type', 'text/html');
       return;
     }
