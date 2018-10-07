@@ -1,8 +1,6 @@
 const _ = require('lodash');
 const { Models } = require('../models');
 
-const { loggedInOnly } = require('../lib/auth-helpers');
-
 const { validate } = require('../lib/validation-helpers');
 
 module.exports = function initRoutes(router) {
@@ -16,7 +14,6 @@ module.exports = function initRoutes(router) {
   router.param('adId', async (adId, ctx, next) => {
     ctx.$.ad = await Models.Ad.findById(adId);
     if (!ctx.$.ad) ctx.throw('NotFound', 'Ad does not exist');
-
     if (!ctx.$.superadmin && ctx.$.ad.advertiserUserId !== ctx.$.authUser.id) {
       ctx.throw('Forbidden', 'This ad is not yours');
     }

@@ -30,3 +30,17 @@ ul.unstyled {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
+.sending {
+  animation-name: pulse;
+  animation-duration: .7s;
+  animation-iteration-count: infinite;
+  opacity: 1 !important;
+  display: inline-block;
+}
+
+@keyframes pulse {
+  from { transform: scale(1.4); }
+  50% { transform: scale(1.2); }
+  to { transform: scale(1.4); }
+}

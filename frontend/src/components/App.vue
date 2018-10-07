@@ -1,13 +1,16 @@
 <template lang='pug'>
 #app
   router-view
+  messages
 </template>
 
 <script>
 // TODO: different favicon?
 import faviconUrl from '@/assets/images/favicon.png';
+import Messages from '@/components/Messages';
 
 const components = {
+  Messages,
 };
 
 
