@@ -8,7 +8,7 @@
       .subtitle.tiny(v-if='userIsSiteOwner')
         | You are the site owner of this property (and you collect the taxes)
       .subtitle.tiny(v-else-if='userIsBillboardOwner')
-        | You are the current owner of this property (and you pay taxes on in)
+        | You are the current owner of this property (and you pay taxes on it)
 
     template(v-if='!fetchBillboardRequest.wasRequested || fetchBillboardRequest.isPending')
       p Loading...
@@ -85,7 +85,7 @@
 
       .embed-code(v-else-if='userIsBillboardOwner')
         h3 Embed code:
-        pre #{"<iframe src='https://hads.xyz/?b={{billboardId}}'></iframe>"}
+        pre #{'<iframe src="{{ origin }}?b={{ billboardId }}" width="{{ selectedBillboard.pixelWidth }}" height="{{ selectedBillboard.pixelHeight }}"></iframe>'}
 
 </template>
 
@@ -121,6 +121,11 @@ export default {
     };
   },
   computed: {
+    origin() {
+      // return window.location.origin;
+      return 'https://hads.xyz';
+    },
+
     ...mapGetters(['userIsLoggedIn', 'selectedBillboard', 'userAccountAddress']),
     ...mapRequestStatuses({
       fetchBillboardRequest: 'FETCH_BILLBOARD_DETAILS',

@@ -88,6 +88,8 @@ export default {
     return {
       listing: {
         price: 1,
+        pixelWidth: null,
+        pixelHeight: null,
       },
       processing: false,
     };
