@@ -5,7 +5,7 @@
       .big-board(v-html="require('@/assets/images/ha-board.svg')")
     .menu-bar.center
       v-button(to-named-route='new-listing') Sell Ad Space
-      v-button Buy Ads
+      v-button(to='#menu') Buy Ads
       v-button(@click="signIn", v-if="!signedIn") Sign in
       v-button(@click="signOut", v-else) Sign out
 

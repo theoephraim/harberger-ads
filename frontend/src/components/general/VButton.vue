@@ -190,7 +190,7 @@ button.button {
     color: @color;
     background: fade(@color, 0);
     &:hover {
-      background: fade(@color, 60);
+      background: fade(@color, 100);
       color: contrast(@color);
       border-color: @color;
 
