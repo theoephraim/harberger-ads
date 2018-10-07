@@ -30,12 +30,6 @@ const networks = {
   5777: 'ganache',
   1: 'mainnet',
 };
-const anonUser = {
-  address: null,
-  name: 'anon',
-  clovers: [],
-  modified: null,
-};
 
 export default {
   // web3 stuff
