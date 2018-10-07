@@ -170,7 +170,7 @@ export default {
 
       // if (this.$hasError()) return;
     },
-    buttonHandler() {
+    async buttonHandler() {
       if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
       if (!this.showForm) {
         this.showForm = true;
