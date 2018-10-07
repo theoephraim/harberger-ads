@@ -92,15 +92,15 @@ export default {
     };
   },
   computed: {
+    account() {
+      return this.$store.state.account;
+    },
+
     ...mapGetters(['userIsLoggedIn', 'billboards']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
       createBillboardRequest: 'CREATE_BILLBOARD',
     }),
-  },
-  mounted() {
-    console.log(this.userIsLoggedIn);
-    if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
   },
   methods: {
     saveButtonHandler() {
@@ -128,6 +128,11 @@ export default {
     ]),
   },
   watch: {
+    account(newVal) {
+      if (newVal && !this.userIsLoggedIn) {
+        this.$store.dispatch('signIn');
+      }
+    },
     'listing.type': function (newVal) {
       if (this.listing.type === 'banner') {
         this.listing.pixelWidth = 1280;

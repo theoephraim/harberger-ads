@@ -122,7 +122,7 @@ export default {
         HarbergerAdsContract.abi,
         HarbergerAdsContract.networks[state.networkId].address,
       );
-      console.log(HarbergerAdsContract.instance.methods);
+      // console.log(HarbergerAdsContract.instance.methods);
       // console.log('instantiated HarbergerAdsContract', HarbergerAdsContract);
     } else {
       console.log(`${name} not deployed on this network`);
@@ -186,7 +186,7 @@ export default {
     });
   },
   async buyBillboard({ state, commit, dispatch }, { id, price }) {
-    console.log(id, price);
+    // console.log(id, price);
     if (!(await dispatch('checkWeb3'))) {
       dispatch('selfDestructMsg', {
         title: 'Error',
