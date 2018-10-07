@@ -1,24 +1,21 @@
-# ETHSF 2018 Hackathon
+# Harberger Ads - hads.xyz
 
-> We don't even know what we're building yet!
+> Ad Marketplace powered by a Harberger tax ownership model
 
-See subfolders
+See https://devpost.com/software/harberger-ads for more details
 
+----
 
-## SETUP
-- install and run ipfs
-  - `brew install ipfs`
-  - `brew services start ipfs`
-- install and run postgres
-  - `brew install postgresql`
-  - `brew services start postgres`
-- create db to use with the graph `createdb hagraph`
+This repo contains two parts of the project:
 
+- API (node.js)
+- Static web client (vue.js)
 
+See also the other two parts of the project:
 
-```
-cargo run -p graph-node --release -- \
-  --postgres-url postgresql://<USERNAME><:PASSWORD>@localhost:5432/<POSTGRES_DB_NAME> \
-  --ethereum-rpc <ETHEREUM_NETWORK_NAME>:https://mainnet.infura.io`
-  --ipfs 127.0.0.1:5001 \
-```
+- Contract - https://github.com/okwme/harberger-ads-contracts
+- [TheGraph](http://thegraph.com) integration - https://github.com/okwme/harberger-ads-subgraph
+
+----
+
+See subfolders for more instructions

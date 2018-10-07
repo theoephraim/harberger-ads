@@ -16,9 +16,6 @@
 - `npm run dev` - compile and run dev server w/ hot reloading at http://localhost:7000
 - `npm run lint` - runs eslint in prod mode (more strict than during dev)
 - `npm run build[:staging|production] [--report]` - build (for env) w/ optional bundle analyzer report
-- `npm run unit` - run unit tests (not really implemented yet)
-- `npm run e2e` - run end-to-end browser tests (not really implemented yet)
-- `npm run test` - run all tests
 
 *Note* A list of pages to get pre-rendered is located under `build/webpack.prod.conf.js`. If a page path is not included here, it will show a default 'Loading' page briefly before loading.
 
