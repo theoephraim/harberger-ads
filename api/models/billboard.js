@@ -11,8 +11,8 @@ module.exports = {
   tableName: 'billboards',
   props: {
     id: 'id',
-    userId: { ref: 'User' },
-    currentAdId: { ref: 'Ad' },
+    userId: { type: 'int', ref: 'User' },
+    currentAdId: { type: 'int', ref: 'Ad', noRefConstraint: true },
     name: 'string',
     description: 'string',
     type: { type: 'string', enum: ['sidebar', 'banner', 'text', 'tv'], default: 'banner' },

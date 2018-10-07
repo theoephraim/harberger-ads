@@ -12,12 +12,12 @@
           .current-ad.bg-circles
             img(:src='selectedBillboard.currentAd.mediaUrl')
             .link-url
-              | Link:
+              | Current Ad Content - Link:
               = ' '
               a.small(:href='selectedBillboard.currentAd.linkUrl' _target='_blank') {{ selectedBillboard.currentAd.linkUrl }}
 
 
-            .form-screen(v-if='showUpdateForm || showPurchaseForm')
+            .form-screen(v-if='showForm')
 
             .current-ad-form(v-if='showForm')
               form-row
@@ -55,10 +55,10 @@
 
             form-input.align-left.big.border-none(
               type='container' label='Total Views'
-            ) {{ selectedBillboard.viewCount || numabbr }}
+            ) {{ selectedBillboard.viewCount | numabbr }}
             form-input.align-left.big.border-none(
               type='container' label='Total Clicks'
-            ) {{ selectedBillboard.clickCount || numabbr }}
+            ) {{ selectedBillboard.clickCount | numabbr }}
           form-row
             form-input.align-left(
               type='container' no-label
@@ -118,15 +118,6 @@ export default {
       return this.showForm ? 'Confirm Purchase' : 'Purchase this ad property';
     },
   },
-  methods: {
-    buy() {
-      this.buyBillboard({ id: this.billboardId, price: toWei(this.price) });
-    },
-
-    ...mapActions([
-      'buyBillboard',
-    ]),
-  },
   mounted() {
     this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId }).then(() => {
       this.price = this.selectedBillboard && this.selectedBillboard.price;
@@ -151,6 +142,12 @@ export default {
 
       if (this.$hasError()) return;
     },
+    buy() {
+      this.buyBillboard({ id: this.billboardId, price: toWei(this.price) });
+    },
+    ...mapActions([
+      'buyBillboard',
+    ]),
   },
 };
 </script>

@@ -10,8 +10,8 @@ module.exports = {
   tableName: 'ads',
   props: {
     id: 'id',
-    advertiserUserId: { ref: 'User' },
-    billboardId: { ref: 'Billboard' },
+    advertiserUserId: { type: 'int', ref: 'User' },
+    billboardId: { type: 'int', ref: 'Billboard' },
     name: 'string',
     description: 'string',
     type: { type: 'string', enum: ['text', 'image', 'video'], default: 'text' },
