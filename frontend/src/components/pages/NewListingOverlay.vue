@@ -3,7 +3,7 @@
   .overlay-screen
   .overlay-content
     router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
-    h2.overlay-header List Your Site
+    h2.overlay-header List New Ad Space
     .overlay-form
       .half
         form-row
@@ -53,8 +53,11 @@
     v-button.overlay-cta(
       @click='saveButtonHandler'
       :loading='createBillboardRequest.isPending' loading-text='Creating your new cash cow...'
-      :disabled='$vv.$error'
+      :disabled='$vv.$error || !userIsLoggedIn'
     ) Save
+    .login-notice(v-if='!userIsLoggedIn')
+      p.small Please <a href='#' @click.prevent='$store.dispatch("signIn")'>finish authentication</a> via metamask
+
 
 </template>
 
@@ -80,13 +83,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['billboards']),
+    ...mapGetters(['userIsLoggedIn', 'billboards']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
       createBillboardRequest: 'CREATE_BILLBOARD',
     }),
   },
   mounted() {
+    console.log(this.userIsLoggedIn);
+    if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
   },
   methods: {
     saveButtonHandler() {
@@ -163,6 +168,10 @@ export default {
   margin: 0 auto;
   padding: 20px 0;
   font-weight: bold;
+}
+
+.login-notice {
+  text-align: center;
 }
 
 </style>

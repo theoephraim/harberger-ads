@@ -74,5 +74,8 @@ export default {
   ...makeAsyncMutations(types.FETCH_BILLBOARD_DETAILS, (state, { response }) => {
     state.selectedBillboard = response;
   }),
+  ...makeAsyncMutations(types.CREATE_BILLBOARD, (state, { response }) => {
+    Vue.set(state.billboards, response.id, response);
+  }),
 
 };

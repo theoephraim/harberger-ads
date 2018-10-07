@@ -5,10 +5,10 @@
       .big-board(v-html="require('@/assets/images/ha-board.svg')")
     .menu-bar.center
       v-button(to-named-route='new-listing') Sell Ad Space
-      v-button(to='#menu') Buy Ads
-      v-button(@click="signIn", v-if="!signedIn") Sign in
-      v-button(@click="signOut", v-else) Sign out
-
+      template(v-if='!userIsLoggedIn')
+        v-button(@click="signIn") Sign in
+      template(v-else)
+        v-button(@click="signOut") Sign out
 
     .main-content
       slot
@@ -35,9 +35,7 @@ export default {
     };
   },
   computed: {
-    signedIn() {
-      return !!this.$store.getters.authHeader;
-    },
+    ...mapGetters(['userIsLoggedIn']),
     classes() {
       return {
         'full-width': this.fullWidth,
@@ -144,77 +142,7 @@ export default {
     }
   }
 }
-.main-nav {
-  float: right;
-  height: 100%;
 
-  // padding-top: 6px;
-
-  &.main-nav__mobile {
-    display: none;
-    @media @mq-small-only {
-      display: block;
-
-      .button {
-        margin-top: 7px;
-        margin-right: 7px;
-        height: @header-bar-height--mobile - 2*7;
-        line-height: @header-bar-height--mobile - 2*7;
-        padding: 0 15px;
-
-      }
-
-    }
-  }
-  &.main-nav__desktop {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 30px;
-    height: @header-bar-height--desktop;
-    @media @mq-small-only {
-      display: none;
-    }
-  }
-  a {
-    display: flex;
-    justify-content: center;
-    &:hover {
-      text-shadow: -0.06ex 0 black, 0.06ex 0 black;
-      transition: .2s all;
-    }
-    //min-width: 53px;
-  }
-  a, .button {
-    font-size: 16px;
-    text-transform: capitalize;
-    margin-left: 25px;
-    color: #242849;
-    text-decoration: none;
-
-    &.router-link-active {
-    }
-  }
-
-  .nav-icon-button {
-    width: @header-bar-height--desktop;
-    height: @header-bar-height--desktop;
-    text-align: center;
-    vertical-align: middle;
-    float: right;
-
-    svg {
-      margin-top: 25%;
-      height: 50%;
-      width: 50%;
-    }
-
-    @media @mq-small-only {
-      width: @header-bar-height--mobile;
-      height: @header-bar-height--mobile;
-    }
-  }
-}
 .main-content {
   // max-width: 1000px;
   margin: 0 auto;

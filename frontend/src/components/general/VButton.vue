@@ -92,6 +92,7 @@ button.button {
 
 .button {
   font-family: @regular-font;
+  font-size: 12px;
   display: inline-block;
   cursor: pointer;
   // border-radius: 3px;
@@ -213,6 +214,10 @@ button.button {
   &.button--inline-important {
     display: inline !important;
     width: auto !important;
+  }
+
+  &.shadow {
+    box-shadow: 3px 3px 0px 0px #888;
   }
 
 }
