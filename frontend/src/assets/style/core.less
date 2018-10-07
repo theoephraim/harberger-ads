@@ -3,6 +3,7 @@
 //@import './_variables.less';
 
 
+@import './basscss.min.css';
 @import './normalize.css';
 @import './typography.less';
 
@@ -43,4 +44,17 @@ ul.unstyled {
   from { transform: scale(1.4); }
   50% { transform: scale(1.2); }
   to { transform: scale(1.4); }
+}
+
+.bg-circles {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPScjZmZmJyAvPgogIDxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSIjMDAwIi8+Cjwvc3ZnPg==");
+  background-repeat: repeat;
+}
+
+.border-none {
+  border: none !important;
+}
+
+.border-left {
+  border-left: 1px solid @bordercolor;
 }

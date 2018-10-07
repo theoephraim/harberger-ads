@@ -11,7 +11,6 @@
 @default-line-height-em: unit(@default-line-height, em);
 @small-font-size: 12px;
 
-
 // Overall site width for the static pages.
 @max-width: 1440px;
 @wrapper-width: 1100px;
@@ -56,3 +55,7 @@
 @default-float-opp: ~`"@{default-float}" == 'left' ? 'right' : 'left'`;
 
 @grid-gutter: @col-gutter * .5 / @rem;
+
+:root {
+	--border-width: 1px;
+}
