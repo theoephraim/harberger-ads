@@ -7,6 +7,7 @@ const { Models } = require('../models');
 const { validate } = require('../lib/validation-helpers');
 
 const iframeSrc = fs.readFileSync(path.resolve(`${__dirname}/../static/iframe.html`), 'utf-8');
+const fallbackSrc = fs.readFileSync(path.resolve(`${__dirname}/../static/fallback.html`), 'utf-8');
 
 const API_URL = nconf.get('API_URL');
 const WEBSITE_URL = nconf.get('WEBSITE_URL');
@@ -15,7 +16,16 @@ module.exports = function initRoutes(router) {
   router.get('/i', async (ctx, next) => {
     const billboardId = ctx.request.query.b;
     const billboard = await Models.Billboard.findById(billboardId);
-    const ad = await billboard.populateRef('currentAd');
+
+    const ad = billboard && await billboard.populateRef('currentAd');
+    if (!ad) {
+      console.log('use fallback');
+      ctx.response.body = fallbackSrc
+        .replace(/{HADS_URL}/g, `${WEBSITE_URL}/listings/${billboardId}`);
+      ctx.set('Content-type', 'text/html');
+      return;
+    }
+
     const impression = await Models.Impression.create({ adId: ad.id });
 
     const impressionSrc = iframeSrc

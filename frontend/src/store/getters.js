@@ -11,6 +11,7 @@ export const requestStatus = asyncActionStatusGetter;
 export const userIsLoggedIn = (state, getters) => !!getters.authHeader;
 export const user = (state) => state.user;
 export const userAccountAddress = (state) => state.account;
+export const searchFilter = (state) => state.searchFilter;
 
 export const authHeader = ({ account, signatures }) => {
   if (!account || !signatures || !signatures[account]) return null;
@@ -23,3 +24,17 @@ export const billboards = (state) => _.values(state.billboards).map((v) => {
   return { ...v, owner: g.owner, price: utils.fromWei(g.price) };
 });
 export const selectedBillboard = (state) => state.selectedBillboard;
+
+
+export const filteredBillboards = (state, getters) => {
+  if (!state.searchFilter) return getters.billboards;
+  console.log(getters.userAccountAddress);
+  // eslint-disable-next-line
+  return _.filter(getters.billboards, (b) => {
+    if (state.searchFilter === 'myads') {
+      return b.currentAd.advertiserUserId === getters.userAccountAddress;
+    } else if (state.searchFilter === 'mysite') {
+      return b.siteOwnerUserId === getters.userAccountAddress;
+    }
+  });
+};

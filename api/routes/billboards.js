@@ -13,7 +13,7 @@ module.exports = function initRoutes(router) {
       SELECT
         b.id,
         count(i.id) AS views,
-        count(a.id) AS trades,
+        count(distinct(a.id)) AS trades,
         SUM(CASE WHEN clicked_at IS NOT NULL THEN 1 ELSE 0 END) AS clicks
       FROM
         billboards b

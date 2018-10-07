@@ -35,7 +35,7 @@ module.exports = {
         where: { billboardId: this.id },
         order: [['createdAt', 'DESC']],
       });
-      console.log(a);
+      // console.log(a);
       return a;
     },
   },
@@ -45,7 +45,7 @@ module.exports = {
         SELECT
           count(*) AS views,
           SUM(CASE WHEN clicked_at IS NOT NULL THEN 1 ELSE 0 END) AS clicks,
-          count(a.id) AS trades
+          count(distinct(a.id)) AS trades
         FROM
           impressions i
           LEFT JOIN ads a ON i.ad_id = a.id

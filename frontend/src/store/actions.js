@@ -186,6 +186,7 @@ export default {
       });
       throw new Error('No ETH account');
     }
+    // eslint-disable-next-line
     await ERC20Contract.instance.methods.approve(HarbergerAdsContract.instance._address, utils.toWei('1000000000000000000')).send({
       from: account,
     });
@@ -251,6 +252,10 @@ export default {
     msg.id = msgId;
     commit(types.ADD_MSG, msg);
     return msgId;
+  },
+
+  setSearchFilter({ commit }, newVal) {
+    commit(types.SET_SEARCH_FILTER, newVal);
   },
 
 

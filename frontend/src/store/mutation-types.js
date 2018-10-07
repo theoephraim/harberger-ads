@@ -26,3 +26,5 @@ export const CONTRACTS_DEPLOYED = 'CONTRACTS_DEPLOYED';
 
 export const ADD_MSG = 'ADD_MSG';
 export const REMOVE_MSG = 'REMOVE_MSG';
+
+export const SET_SEARCH_FILTER = 'SET_SEARCH_FILTER';

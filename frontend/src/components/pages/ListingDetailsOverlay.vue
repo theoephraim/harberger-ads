@@ -1,8 +1,9 @@
 <template lang='pug'>
 .overlay
   .overlay-screen
-  .overlay-content
-    router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
+  .overlay-content(v-if="!processing")
+    router-link.overlay-exit(:to="{name: 'home'}")
+      small.chiclet.caps ← Back
     .overlay-header
       h2 Ad Property Details
       .subtitle.tiny(v-if='userIsSiteOwner')
@@ -15,7 +16,7 @@
     template(v-else)
       .overlay-form.full-border
         .col-8
-          .current-ad.bg-circles
+          .current-ad.bg-pattern
             template(v-if='selectedBillboard.currentAd')
               img(:src='selectedBillboard.currentAd.mediaUrl')
               .link-url
@@ -86,6 +87,14 @@
       .embed-code(v-else-if='userIsBillboardOwner')
         h3 Embed code:
         pre #{'<iframe src="{{ origin }}?b={{ billboardId }}" width="{{ selectedBillboard.pixelWidth }}" height="{{ selectedBillboard.pixelHeight }}"></iframe>'}
+
+  .overlay-content(v-else)
+    .align-center
+      p.h1 Processing...
+      div
+        p.sending.h1 ✨
+        p Your transaction is being processed. Please confirm with MetaMask!
+
 </template>
 
 <script>
@@ -117,6 +126,7 @@ export default {
         mediaUrl: null,
       },
       showForm: false,
+      processing: false,
     };
   },
   computed: {
@@ -192,35 +202,45 @@ export default {
 
       if (this.$hasError()) return;
 
-      if (!this.userIsBillboardOwner) {
-        let currentPrice = toWei(this.selectedBillboard.price);
-        currentPrice = makeBn(currentPrice);
+      try {
+        if (!this.userIsBillboardOwner) {
+          this.processing = true;
 
-        const allowance = makeBn(this.allowance);
-        if (allowance.lt(currentPrice)) {
-          await this.$store.dispatch('allowERC20');
+          let currentPrice = toWei(this.selectedBillboard.price);
+          currentPrice = makeBn(currentPrice);
+
+          const allowance = makeBn(this.allowance);
+          if (allowance.lt(currentPrice)) {
+            await this.$store.dispatch('allowERC20');
+          }
+
+          let newPrice = toWei(this.formPayload.price);
+          newPrice = newPrice.toString();
+          currentPrice = currentPrice.toString();
+
+          await this.$store.dispatch('buyBillboard', {
+            id: this.selectedBillboard.contractId,
+            currentPrice,
+            newPrice,
+          });
+        } else if (this.formPayload.price !== null) {
+          this.processing = true;
+          await this.$store.dispatch('setBillboardPrice', {
+            billboardId: this.billboardId,
+            price: toWei(this.formPayload.price),
+          });
         }
-
-        let newPrice = toWei(this.formPayload.price);
-        newPrice = newPrice.toString();
-        currentPrice = currentPrice.toString();
-
-        await this.$store.dispatch('buyBillboard', {
-          id: this.selectedBillboard.contractId,
-          currentPrice,
-          newPrice,
-        });
-      } else if (this.formPayload.price !== null) {
-        await this.$store.dispatch('setBillboardPrice', {
-          billboardId: this.billboardId,
-          price: toWei(this.formPayload.price),
-        });
+      } catch (err) {
+        console.log(err);
+        this.processing = false;
+        return;
       }
 
       await this.$store.dispatch('updateBillboardAd', {
         billboardId: this.billboardId,
         ...this.formPayload,
       });
+      this.processing = false;
       if (this.updateBillboardRequest.isSuccess) {
         this.showForm = false;
         this.formPayload = {};
@@ -276,6 +296,21 @@ export default {
   text-align: center;
   h2 { padding: 0; margin: 0; }
   p { margin: 0;}
+}
+.chiclet {
+  border: 1px solid @bordercolor;
+  // background: white;
+  // color: @black;
+  padding: 0.5em 2em;
+  border-radius: 5px;
+  display: block;
+  transition: 0.3s all ease-out;
+  &:hover {
+    color: @black;
+    background: white;
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0px 0px #888;
+  }
 }
 
 

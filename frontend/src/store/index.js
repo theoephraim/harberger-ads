@@ -39,6 +39,7 @@ const initialState = {
 
   billboards: {},
   selectedBillboard: {},
+  searchFilter: null,
 };
 
 

@@ -19,11 +19,11 @@
                 a(href='#' @click.prevent="signIn") Sign in
             template(v-else)
               li
-                a(href='#' @click.prevent='') Everything
+                a(href='#' @click.prevent='setSearchFilter(null)' :class='{active: !searchFilter}') Everything
               li
-                a(href='#' @click.prevent='') Ads on my sites
+                a(href='#' @click.prevent='setSearchFilter("mysite")' :class='{active: searchFilter === "mysite"}') Ads on my sites
               li
-                a(href='#' @click.prevent='') My Ads
+                a(href='#' @click.prevent='setSearchFilter("myads")' :class='{active: searchFilter === "myads"}') My Ads
               li
                 a(href='#' @click.prevent="signOut") Sign out
 
@@ -52,7 +52,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['userIsLoggedIn']),
+    ...mapGetters(['userIsLoggedIn', 'searchFilter']),
     classes() {
       return {
         'full-width': this.fullWidth,
@@ -75,6 +75,9 @@ export default {
         behavior: 'smooth',
       });
     },
+    setSearchFilter(val) {
+      this.$store.dispatch('setSearchFilter', val);
+    },
   },
 };
 </script>
@@ -91,9 +94,15 @@ export default {
   flex: 1 0 auto;
 }
 
+.logotype {
+  display: inline-block;
+  transform: rotateZ(-25deg);
+  transform-origin: 50%;
+}
 
 .main-content {
   // max-width: 1000px;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 35px;
   padding-top: 60px;

@@ -2,7 +2,8 @@
 .overlay
   .overlay-screen
   .overlay-content(v-if="!processing")
-    router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
+    router-link.overlay-exit(:to="{name: 'home'}")
+      small.chiclet.caps ← Back
     .overlay-header
       h2 List New Ad Space For Sale
     .overlay-form
