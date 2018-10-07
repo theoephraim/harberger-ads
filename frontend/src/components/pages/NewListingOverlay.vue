@@ -65,7 +65,6 @@
       div
         p.sending.h1 ✨
         p Your transaction is being processed. Please confirm with MetaMask!
-
 </template>
 
 <script>
@@ -107,7 +106,7 @@ export default {
     saveButtonHandler() {
       if (this.$hasError()) return;
       this.processing = true;
-      this.addProperty().then((data) => {
+      this.addProperty(this.listing.price).then((data) => {
         this.listing.contractId = data.events.Change.returnValues.id;
         return this.createBillboard(this.listing);
       }).then(() => {

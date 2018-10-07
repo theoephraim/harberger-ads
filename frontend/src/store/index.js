@@ -33,7 +33,9 @@ const initialState = {
   authToken: null,
   user: {},
 
-  theGraph: {},
+  // theGraph: {},
+  graphProperties: {},
+  graphUsers: {},
 
   billboards: {},
   selectedBillboard: {},

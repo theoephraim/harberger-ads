@@ -23,7 +23,7 @@ export function toWei(n = 0) {
   if (typeof n === 'object') return n;
   // eslint-disable-next-line
   n = new BigNumber(n);
-  return utils.toWei(n.toString());
+  return utils.toWei(n.toString(10));
 }
 
 export function bnMinus(one = 0, two = 0) {
