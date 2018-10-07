@@ -64,7 +64,6 @@
       p.h1 Processing, confirm with MetaMask
       div
         p.sending.h1 ✨
-
 </template>
 
 <script>
@@ -104,7 +103,7 @@ export default {
     saveButtonHandler() {
       if (this.$hasError()) return;
       this.processing = true;
-      this.addProperty().then((data) => {
+      this.addProperty(this.listing.price).then((data) => {
         this.listing.contractId = data.events.Change.returnValues.id;
         return this.createBillboard(this.listing);
       }).then(() => {

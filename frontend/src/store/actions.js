@@ -162,7 +162,7 @@ export default {
     );
   },
 
-  async addProperty({ state, commit, dispatch }) {
+  async addProperty({ state, commit, dispatch }, price) {
     if (!(await dispatch('checkWeb3'))) {
       dispatch('selfDestructMsg', {
         title: 'Error',
@@ -180,7 +180,7 @@ export default {
       });
       throw new Error('No ETH account');
     }
-    return HarbergerAdsContract.instance.methods.addProperty().send({
+    return HarbergerAdsContract.instance.methods.addProperty(utils.toWei(price.toString())).send({
       from: account,
     });
   },
@@ -209,11 +209,9 @@ export default {
     params: {
       query: `{
         properties {
-          id
           owner
           price
           propertyId
-          previousOwners
         }
         users {
           id
