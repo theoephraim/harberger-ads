@@ -20,12 +20,12 @@
             required
           )
           form-input(
-            type='integer' :min='100' :max='1200' v-model='listing.pixelWidth'
+            type='integer' :min='100' :max='2000' v-model='listing.pixelWidth'
             label='Width (px)'
             required
           )
           form-input(
-            type='integer' :min='100' :max='1200' v-model='listing.pixelHeight'
+            type='integer' :min='100' :max='2000' v-model='listing.pixelHeight'
             label='Height (px)'
             required
           )
@@ -61,9 +61,10 @@
 
   .overlay-content(v-else)
     .align-center
-      p.h1 Processing, confirm with MetaMask
+      p.h1 Processing...
       div
         p.sending.h1 ✨
+        p Your transaction is being processed. Please confirm with MetaMask!
 </template>
 
 <script>
@@ -84,7 +85,9 @@ export default {
   },
   data() {
     return {
-      listing: {},
+      listing: {
+        price: 1,
+      },
       processing: false,
     };
   },
@@ -123,6 +126,20 @@ export default {
       'addProperty',
       'createBillboard',
     ]),
+  },
+  watch: {
+    'listing.type': function (newVal) {
+      if (this.listing.type === 'banner') {
+        this.listing.pixelWidth = 1280;
+        this.listing.pixelHeight = 140;
+      } else if (this.listing.type === 'sidebar') {
+        this.listing.pixelWidth = 140;
+        this.listing.pixelHeight = 640;
+      } else {
+        this.listing.pixelWidth = 1920;
+        this.listing.pixelHeight = 1080;
+      }
+    },
   },
 };
 </script>

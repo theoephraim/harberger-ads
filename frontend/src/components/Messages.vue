@@ -22,7 +22,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 3;
+  z-index: 100;
   margin-top: 1rem;
   background: #111;
 }
