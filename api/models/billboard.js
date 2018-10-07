@@ -35,7 +35,7 @@ module.exports = {
         where: { billboardId: this.id },
         order: [['createdAt', 'DESC']],
       });
-      console.log(a);
+      // console.log(a);
       return a;
     },
   },

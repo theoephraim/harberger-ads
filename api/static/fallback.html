@@ -1,0 +1,51 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,600');
+html, body {
+  padding: 0; margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', Helvetica, Arial, sans-serif;
+  background-size: cover;
+  background-color: #1F1F1F;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+}
+.media > span {
+  display: inline-block;
+  transform: rotateZ(-25deg);
+}
+.powered {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,.3);
+  color: white;
+  font-size: 11px;
+  font-family: Arial;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+<a class="media" href="{HADS_URL}" target='_parent'>
+  <span>HA</span>
+</a>
+
+<a class="powered" href="{HADS_URL}" target="_parent">powered by hads.xyz</a>
+</body>
+</html>
