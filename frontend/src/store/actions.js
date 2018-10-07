@@ -122,7 +122,7 @@ export default {
         HarbergerAdsContract.abi,
         HarbergerAdsContract.networks[state.networkId].address,
       );
-      console.log('instantiated HarbergerAdsContract');
+      // console.log('instantiated HarbergerAdsContract', HarbergerAdsContract);
     } else {
       console.log(`${name} not deployed on this network`);
       throw new Error('wrong-network');
@@ -136,6 +136,7 @@ export default {
     const { account } = state;
     if (!account) {
       dispatch('selfDestructMsg', {
+        title: 'Error',
         type: 'error',
         msg: 'No ETH account to sign in with',
       });
@@ -159,6 +160,33 @@ export default {
         commit(types.SIGN_IN, { account, signature: result });
       },
     );
+  },
+
+  async addProperty({ state, commit, dispatch }) {
+    if (!(await dispatch('checkWeb3'))) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'Web3 not available',
+      });
+      return;
+    }
+    const { account } = state;
+    if (!account) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'No ETH account to sign in with',
+      });
+      return;
+    }
+    await HarbergerAdsContract.instance.methods.addProperty().send({
+      from: account,
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
   },
 
   // logs

@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
@@ -95,8 +95,15 @@ export default {
   },
   methods: {
     saveButtonHandler() {
-      // - if (this.$hasError()) return;
+      if (this.$hasError()) return;
+      this.addProperty().then(() => {
+        console.log('done.../');
+      });
     },
+
+    ...mapActions([
+      'addProperty',
+    ]),
   },
 };
 </script>
