@@ -296,4 +296,10 @@ export default {
     params: payload,
   })),
 
+  updateBillboardAd: makeAsyncAction(types.UPDATE_BILLBOARD_AD, (ctx, payload) => ({
+        method: 'post',
+        url: `/api/billboards/${payload.billboardId}/set-ad`,
+        params: _.omit(payload, 'billboardId'),
+    })),
+
 };

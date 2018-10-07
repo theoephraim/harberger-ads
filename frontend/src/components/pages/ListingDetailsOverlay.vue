@@ -86,7 +86,7 @@
 
       .embed-code(v-else-if='userIsBillboardOwner')
         h3 Embed code:
-        pre #{'<iframe src="{{ origin }}?b={{ billboardId }}" width="{{ selectedBillboard.pixelWidth }}" height="{{ selectedBillboard.pixelHeight }}"></iframe>'}
+        pre #{'<iframe src="{{ origin }}/api/i?b={{ billboardId }}" width="{{ selectedBillboard.pixelWidth }}" height="{{ selectedBillboard.pixelHeight }}"></iframe>'}
 
   .overlay-content(v-else)
     .align-center
@@ -145,8 +145,8 @@ export default {
       return this.graphUsers[this.account].allowance;
     },
     origin() {
-      // return window.location.origin;
-      return 'https://hads.xyz/api/i';
+      return window.location.origin;
+      // - return 'https://hads.xyz/api/i';
     },
     ...mapState(['graphUsers', 'account']),
     ...mapGetters(['userIsLoggedIn', 'selectedBillboard', 'userAccountAddress']),

@@ -33,7 +33,7 @@ main-layout
               :to='{name: "listing-details", params: { billboardId: row.id } }'
             )
               span(v-if='row.siteOwnerUserId === userAccountAddress') Details
-              span(v-else-if='row.currentAd.advertiserUserId === userAccountAddress') Manage Content
+              span(v-else-if='row.currentAd.advertiserUserId === userAccountAddress && userIsLoggedIn') Manage Content
               span(v-else) Purchase
 </template>
 
@@ -54,7 +54,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(['filteredBillboards', 'userAccountAddress']),
+    ...mapGetters(['filteredBillboards', 'userAccountAddress', 'userIsLoggedIn']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
     }),
