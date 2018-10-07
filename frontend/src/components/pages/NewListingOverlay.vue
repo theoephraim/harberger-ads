@@ -3,7 +3,8 @@
   .overlay-screen
   .overlay-content(v-if="!processing")
     router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
-    h2.overlay-header List New Ad Space For Sale
+    .overlay-header
+      h2 List New Ad Space For Sale
     .overlay-form
       .half
         form-row
@@ -87,20 +88,22 @@ export default {
     return {
       listing: {
         price: 1,
+        pixelWidth: null,
+        pixelHeight: null,
       },
       processing: false,
     };
   },
   computed: {
+    account() {
+      return this.$store.state.account;
+    },
+
     ...mapGetters(['userIsLoggedIn', 'billboards']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
       createBillboardRequest: 'CREATE_BILLBOARD',
     }),
-  },
-  mounted() {
-    console.log(this.userIsLoggedIn);
-    if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
   },
   methods: {
     saveButtonHandler() {
@@ -128,6 +131,11 @@ export default {
     ]),
   },
   watch: {
+    account(newVal) {
+      if (newVal && !this.userIsLoggedIn) {
+        this.$store.dispatch('signIn');
+      }
+    },
     'listing.type': function (newVal) {
       if (this.listing.type === 'banner') {
         this.listing.pixelWidth = 1280;
@@ -179,6 +187,11 @@ export default {
 
 .overlay-header {
   text-align: center;
+  padding: 15px 0;
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .buttons {

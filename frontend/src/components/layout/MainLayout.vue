@@ -3,12 +3,29 @@
   .flex-wrap
     .splash
       .big-board(v-html="require('@/assets/images/ha-board.svg')")
+
     .menu-bar.center
-      v-button(to-named-route='new-listing') Sell Ad Space
-      template(v-if='!userIsLoggedIn')
-        v-button(@click="signIn") Sign in
-      template(v-else)
-        v-button(@click="signOut") Sign out
+      v-button(to-named-route='new-listing') Sell Your Ad Space
+      v-button(@click='scrollDown') Browse Inventory
+
+    nav.nav-bar
+      div.row.clearfix
+        div.col.col-2
+          span.logotype HA
+        div.col.col-10.align-right
+          ul.caps.inline
+            template(v-if='!userIsLoggedIn')
+              li
+                a(href='#' @click.prevent="signIn") Sign in
+            template(v-else)
+              li
+                a(href='#' @click.prevent='') Everything
+              li
+                a(href='#' @click.prevent='') Ads on my sites
+              li
+                a(href='#' @click.prevent='') My Ads
+              li
+                a(href='#' @click.prevent="signOut") Sign out
 
     .main-content
       slot
@@ -51,14 +68,18 @@ export default {
     ...mapMutations({
       signOut: 'SIGN_OUT',
     }),
+    scrollDown() {
+      window.scroll({
+        top: window.innerHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    },
   },
 };
 </script>
 
 <style lang='less'>
-
-@header-bar-height--desktop: 60px;
-@header-bar-height--mobile: 50px;
 
 // this flex stuff sets up the sticky footer
 .main-wrap {
@@ -69,79 +90,7 @@ export default {
 .flex-wrap {
   flex: 1 0 auto;
 }
-.header-button {
-  height: 40px;
-  border-radius: 2px;
-  margin: 0 14px;
-}
-.flex-bar {
-  height: @header-bar-height--desktop;
-  padding: 15px 12px;
-  > div {
-    min-width: 100px;
-    height: @header-bar-height--desktop;
-    color: black;
-    display: inline-block;
-    justify-content: center;
-    line-height: @header-bar-height--desktop;
-    vertical-align: middle;
-  }
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-}
-
-.header-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  height: @header-bar-height--desktop;
-  padding: 15px 12px;
-  color: white;
-  text-align: left;
-  position: fixed;
-  z-index: 1000;
-  width: 100%;
-  a {
-    color: white;
-  }
-  @media @mq-small-only {
-    height: @header-bar-height--mobile;
-    padding: 0;
-    position: relative;
-  }
-  .main-wrap.no-fixed-header & {
-    position: relative;
-  }
-}
-
-.main-logo {
-  display: flex;
-  align-items: center;
-  height: 28px;
-  width: auto;
-  display: flex;
-  @media @mq-small-only {
-    margin-left: 5px;
-  }
-
-  > svg {
-    display: block;
-    fill: black;
-    height: 100%;
-    max-width: 40vw;
-    transition: 0.5s all;
-  }
-  &:hover {
-    > svg {
-      fill: @blue-green;
-    }
-  }
-}
 
 .main-content {
   // max-width: 1000px;
@@ -169,7 +118,8 @@ export default {
 
 
 .splash {
-  height: 80vh;
+  height: 75vh;
+  padding-bottom: 30px;
   display: flex;
   align-items: center;
   .big-board {
@@ -184,6 +134,7 @@ export default {
 }
 
 .menu-bar {
+  height: 25vh;
   &>* {
     min-width: 180px;
   }
@@ -201,6 +152,16 @@ export default {
       border-radius: 0 6px 6px 0;
     }
   }
+}
+
+.nav-bar {
+  background: @black;
+  z-index: 10;
+  padding: 1em 35px;
+  top: 0;
+  position: sticky;
+  margin-top: -50px;
+
 }
 
 

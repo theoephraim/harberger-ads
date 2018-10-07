@@ -4,7 +4,7 @@ const _ = require('lodash');
 const ENV = {};
 
 // defaults
-ENV.API_TIMEOUT = 10000;
+ENV.API_TIMEOUT = 30000;
 
 // env-specific
 if (process.env.LOAD_ENV === 'development' || !process.env.LOAD_ENV) {

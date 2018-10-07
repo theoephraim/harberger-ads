@@ -122,7 +122,7 @@ export default {
         HarbergerAdsContract.abi,
         HarbergerAdsContract.networks[state.networkId].address,
       );
-      console.log(HarbergerAdsContract.instance.methods);
+      // console.log(HarbergerAdsContract.instance.methods);
       // console.log('instantiated HarbergerAdsContract', HarbergerAdsContract);
     } else {
       console.log(`${name} not deployed on this network`);
@@ -163,51 +163,47 @@ export default {
     );
   },
 
+  async ensureWeb3Connected({ state, dispatch }) {
+    if (!(await dispatch('checkWeb3'))) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'Web3 not available',
+      });
+      throw new Error('Web3 not available');
+    }
+    const { account } = state;
+    if (!account) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'No ETH account to sign in with',
+      });
+      throw new Error('No ETH account');
+    }
+  },
+
+
   async addProperty({ state, commit, dispatch }, price) {
-    if (!(await dispatch('checkWeb3'))) {
-      dispatch('selfDestructMsg', {
-        title: 'Error',
-        type: 'error',
-        msg: 'Web3 not available',
-      });
-      throw new Error('Web3 not available');
-    }
-    const { account } = state;
-    if (!account) {
-      dispatch('selfDestructMsg', {
-        title: 'Error',
-        type: 'error',
-        msg: 'No ETH account to sign in with',
-      });
-      throw new Error('No ETH account');
-    }
+    await dispatch('ensureWeb3Connected');
     return HarbergerAdsContract.instance.methods.addProperty(utils.toWei(price.toString())).send({
-      from: account,
+      from: state.account,
     });
   },
-  async buyBillboard({ state, commit, dispatch }, { id, price }) {
-    console.log(id, price);
-    if (!(await dispatch('checkWeb3'))) {
-      dispatch('selfDestructMsg', {
-        title: 'Error',
-        type: 'error',
-        msg: 'Web3 not available',
-      });
-      throw new Error('Web3 not available');
-    }
-    const { account } = state;
-    if (!account) {
-      dispatch('selfDestructMsg', {
-        title: 'Error',
-        type: 'error',
-        msg: 'No ETH account to sign in with',
-      });
-      throw new Error('No ETH account');
-    }
-    return HarbergerAdsContract.instance.methods.buy(parseInt(id), price, price).send({
-      from: account,
+  async buyBillboard({ state, commit, dispatch }, { billboardId, price }) {
+    await dispatch('ensureWeb3Connected');
+    return HarbergerAdsContract.instance.methods.buy(billboardId, price, price).send({
+      from: state.account,
     });
   },
+  async setBillboardPrice({ state, commit, dispatch }, { billboardId, price }) {
+    // console.log(billboardId, price);
+    await dispatch('ensureWeb3Connected');
+    return HarbergerAdsContract.instance.methods.buy(billboardId, price, price).send({
+      from: state.account,
+    });
+  },
+
 
   // logs
   selfDestructMsg({ commit }, msg) {
@@ -261,5 +257,11 @@ export default {
     url: '/api/billboards',
     params: payload,
   })),
+  updateBillboardAd: makeAsyncAction(types.UPDATE_BILLBOARD_AD, (ctx, payload) => ({
+    method: 'post',
+    url: `/api/billboards/${payload.billboardId}/set-ad`,
+    params: _.omit(payload, 'billboardId'),
+  })),
+
 
 };

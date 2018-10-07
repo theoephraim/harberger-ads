@@ -87,6 +87,7 @@
         :value.prop='value'
         :step.prop='numberInputStepValue'
         ref='input'
+        :min='min'
       )
       a.pass-show-hide-toggle(
         v-if='type === "password" && allowShowPassword'

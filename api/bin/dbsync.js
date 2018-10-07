@@ -19,70 +19,91 @@ const { Models, sequelize, dbReady } = require('../models');
   await sequelize.sync({ force: true });
 
   const advertiserUser = await Models.User.create({
+    id: '0x54e1f0cbde4f686a3166485011a534a596fd3444',
     name: 'Advertiser',
     email: 'advertiser@hads.xyz',
   });
 
   const siteOwnerUser = await Models.User.create({
+    id: '0x54e1f0cbde4f686a3166485011a534a596fd3eb3',
     name: 'ETHSanFrancisco.com',
     email: 'marketing@ethsf.com',
   });
-
-  const exampleAd = await Models.Ad.create({
-    adverstiserUserId: advertiserUser.id,
-    name: 'Buy CryptoPuppies Now!',
-    mediaUrl: 'https://placekitten.com/200/300',
-    linkUrl: 'http://hads.xyz',
+  const siteOwnerUser2 = await Models.User.create({
+    id: '0x54e1f0cbde4f686a3166485011a534a596fd3445',
+    name: 'ETH Berlin',
+    email: 'marketing@ethberlin.com',
   });
 
-
-  const billboard = await Models.Billboard.create({
-    userId: siteOwnerUser.id,
+  const billboard1 = await Models.Billboard.create({
+    siteOwnerUserId: siteOwnerUser.id,
     name: 'ETHSF.com - sidebar',
-    currentAdId: exampleAd.id,
     url: 'https://hads.xyz',
     type: 'sidebar',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 100,
   });
 
   const billboard2 = await Models.Billboard.create({
-    userId: siteOwnerUser.id,
+    siteOwnerUserId: siteOwnerUser.id,
     name: 'ETHSF.com - banner',
-    currentAdId: exampleAd.id,
     url: 'https://hads.xyz',
     type: 'sidebar',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 10,
   });
 
   const billboard3 = await Models.Billboard.create({
-    userId: siteOwnerUser.id,
+    siteOwnerUserId: siteOwnerUser2.id,
     name: 'Fort Mason Community Garden',
-    currentAdId: exampleAd.id,
     url: 'https://hads.xyz',
     type: 'tv',
     pixelWidth: 1200,
     pixelHeight: 800,
+    price: 12.34,
   });
 
   const billboard4 = await Models.Billboard.create({
-    userId: siteOwnerUser.id,
+    siteOwnerUserId: siteOwnerUser2.id,
     name: 'some Ether site',
-    currentAdId: exampleAd.id,
     url: 'https://hads.xyz',
     type: 'sidebar',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 20,
   });
   const billboard5 = await Models.Billboard.create({
-    userId: siteOwnerUser.id,
+    siteOwnerUserId: siteOwnerUser2.id,
     name: 'Another',
-    currentAdId: exampleAd.id,
     url: 'https://hads.xyz',
     type: 'banner',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 0.01,
+  });
+
+  for (let i = 0; i <= 20; i++) {
+    /* eslint-disable */
+    const billboard = await Models.Billboard.create({
+      siteOwnerUserId: siteOwnerUser2.id,
+      name: `Ad Property #${i}`,
+      url: 'https://hads.xyz',
+      type: 'banner',
+      pixelWidth: 200,
+      pixelHeight: 500,
+      price: parseFloat((1000 * Math.random()).toFixed(2)),
+    });
+  }
+
+
+  const exampleAd = await Models.Ad.create({
+    adverstiserUserId: advertiserUser.id,
+    billboardId: billboard1.id,
+    name: 'Buy CryptoPuppies Now!',
+    mediaUrl: 'https://placekitten.com/200/300',
+    linkUrl: 'http://hads.xyz',
   });
 
 

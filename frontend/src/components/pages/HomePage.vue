@@ -6,22 +6,6 @@ main-layout
     h2 Loading...
   div(v-else)
     //- h3 Loaded!
-
-    div#menu.sticky
-      div.row.clearfix
-        div.col.col-2
-          span.logotype HA
-        div.col.col-10.align-right
-          ul.caps.inline
-            li
-              a.active Everything
-            li
-              a My Ads
-            li
-              a My Billboards
-            li
-              a List New
-
     table-component(
       :data='billboards'
       :show-filter='false' :show-caption='false'
@@ -33,21 +17,24 @@ main-layout
         template(slot-scope='row')
           div
             | {{ row.type }}
-
-            span.tiny.italic  - {{ row.pixelWidth }} x {{ row.pixelHeight }}
+            br
+            span.tiny.italic {{ row.pixelWidth }} x {{ row.pixelHeight }}
 
       table-column2(show='viewCount' label='Views' type='numabbr')
       table-column2(show='clickCount' label='Clicks' type='numabbr')
 
-      table-column2(show='price' label='Current Price' type='money')
-      table-column2(show='taxRate' label='Tax' type='percent')
+      table-column2(show='price' label='Purchase Price' type='money')
+      table-column2(show='taxRate' label='Taxes' type='percent')
       table-column2(show='tradeCount' label='Trades' type='numabbr')
-
       table-column(:sortable='false')
         template(slot-scope='row')
+
           v-button.shadow(
             :to='{name: "listing-details", params: { billboardId: row.id } }'
-          ) Buy Ad Property
+          )
+            span(v-if='row.siteOwnerUserId === userAccountAddress') Details
+            span(v-else-if='row.currentAd.advertiserUserId === userAccountAddress') Manage Content
+            span(v-else) Purchase
 </template>
 
 <script>
@@ -69,7 +56,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['billboards']),
+    ...mapGetters(['billboards', 'userAccountAddress']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
     }),

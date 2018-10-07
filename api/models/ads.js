@@ -10,20 +10,17 @@ module.exports = {
   tableName: 'ads',
   props: {
     id: 'id',
-    advertiserUserId: { ref: 'User' },
-    billboardId: { ref: 'Billboard' },
-    name: 'string',
-    description: 'string',
-    type: { type: 'string', enum: ['text', 'image', 'video'], default: 'text' },
-    textContent: 'string',
+    advertiserUserId: { type: 'string', ref: 'User' },
+    billboardId: { type: 'int', ref: 'Billboard' },
+    // name: 'string',
+    // description: 'string',
+    // type: { type: 'string', enum: ['text', 'image', 'video'], default: 'text' },
+    // textContent: 'string',
     linkUrl: 'url',
     mediaUrl: 'url',
   },
   virtualProps: {
     advertiserUser() { return this.refs.advertiserUser; },
-  },
-  complexRefs: {
-    async billboard() { return Models.Billboard.find({ where: { currentAdId: this.id } }); },
   },
   instanceMethods: {
   },

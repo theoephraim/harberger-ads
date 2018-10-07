@@ -3,42 +3,52 @@
   .overlay-screen
   .overlay-content
     router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
-    h2.overlay-header Ad Property Details
+    .overlay-header
+      h2 Ad Property Details
+      .subtitle.tiny(v-if='userIsSiteOwner')
+        | You are the site owner of this property (and you collect the taxes)
+      .subtitle.tiny(v-else-if='userIsBillboardOwner')
+        | You are the current owner of this property (and you pay taxes on it)
+
     template(v-if='!fetchBillboardRequest.wasRequested || fetchBillboardRequest.isPending')
       p Loading...
     template(v-else)
       .overlay-form.full-border
         .col-8
           .current-ad.bg-circles
-            img(:src='selectedBillboard.currentAd.mediaUrl')
-            .link-url
-              | Link:
-              = ' '
-              a.small(:href='selectedBillboard.currentAd.linkUrl' _target='_blank') {{ selectedBillboard.currentAd.linkUrl }}
+            template(v-if='selectedBillboard.currentAd')
+              img(:src='selectedBillboard.currentAd.mediaUrl')
+              .link-url
+                | Current Ad Content - Link:
+                = ' '
+                a.small(:href='selectedBillboard.currentAd.linkUrl' _target='_blank') {{ selectedBillboard.currentAd.linkUrl }}
+            .empty-notice(v-else)
+              h2 :(<br/>This ad property is currently empty!
+              p.tiny.italic but your ad would look great in it
 
 
-            .form-screen(v-if='showUpdateForm || showPurchaseForm')
-
-            .current-ad-form(v-if='showForm')
-              form-row
-                form-input(
-                  type='money' v-model='purchasePayload.price'
-                  :min='selectedBillboard.price + 1'
-                  label='Your New Price'
-                  :required='!userOwnsCurrentAd'
-                )
-              form-row
-                form-input(
-                  type='url' v-model='purchasePayload.mediaUrl'
-                  label='New Ad Image URL'
-                  :required='!userOwnsCurrentAd'
-                )
-              form-row
-                form-input(
-                  type='url' v-model='purchasePayload.linkUrl'
-                  label='New Link URL'
-                  :required='!userOwnsCurrentAd'
-                )
+            template(v-if='showForm')
+              .form-screen
+              .current-ad-form
+                form-row
+                  form-input(
+                    type='money' v-model='formPayload.price'
+                    :min='selectedBillboard.price + 1'
+                    label='Your New Price'
+                    :required='!userIsBillboardOwner'
+                  )
+                form-row
+                  form-input(
+                    type='url' v-model='formPayload.mediaUrl'
+                    label='New Ad Image URL'
+                    :required='!userIsBillboardOwner'
+                  )
+                form-row
+                  form-input(
+                    type='url' v-model='formPayload.linkUrl'
+                    label='New Link URL'
+                    :required='!userIsBillboardOwner'
+                  )
 
         .col-4.border-left
           form-row
@@ -47,7 +57,7 @@
             )
               span.bold {{ selectedBillboard.name || 'No Name' }}
               br
-              a.small(:href='selectedBillboard.url' target='_blank') view this property
+              a.small(:href='selectedBillboard.url' target='_blank' v-text="selectedBillboard.url")
           form-row
             form-input.align-left.big.border-none(
               type='container' label='Current Price'
@@ -55,10 +65,10 @@
 
             form-input.align-left.big.border-none(
               type='container' label='Total Views'
-            ) {{ selectedBillboard.viewCount || numabbr }}
+            ) {{ selectedBillboard.viewCount | numabbr }}
             form-input.align-left.big.border-none(
               type='container' label='Total Clicks'
-            ) {{ selectedBillboard.clickCount || numabbr }}
+            ) {{ selectedBillboard.clickCount | numabbr }}
           form-row
             form-input.align-left(
               type='container' no-label
@@ -71,10 +81,15 @@
       //- :loading='createBillboardRequest.isPending' loading-text='Creating your new cash cow...'
       .overlay-under-cta(v-if='showForm')
         p.small <a href='#' @click.prevent='showForm = false'>or cancel</a>
-            //- v-button(@click="buy") Buy
+
+
+      .embed-code(v-else-if='userIsBillboardOwner')
+        h3 Embed code:
+        pre #{'<iframe src="{{ origin }}?b={{ billboardId }}" width="{{ selectedBillboard.pixelWidth }}" height="{{ selectedBillboard.pixelHeight }}"></iframe>'}
 </template>
 
 <script>
+import _ from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
@@ -96,22 +111,40 @@ export default {
   },
   data() {
     return {
-      purchasePayload: {},
-      showPurchaseForm: false,
+      formPayload: {
+        price: null,
+        linkUrl: null,
+        mediaUrl: null,
+      },
       showForm: false,
     };
   },
   computed: {
-    ...mapGetters(['userIsLoggedIn', 'selectedBillboard']),
+    origin() {
+      // return window.location.origin;
+      return 'https://hads.xyz/api/i';
+    },
+
+    ...mapGetters(['userIsLoggedIn', 'selectedBillboard', 'userAccountAddress']),
     ...mapRequestStatuses({
       fetchBillboardRequest: 'FETCH_BILLBOARD_DETAILS',
+      updateBillboardRequest: 'UPDATE_BILLBOARD_AD',
     }),
-    userOwnsCurrentAd() {
-      return false;
+    userIsSiteOwner() {
+      return this.selectedBillboard.siteOwnerUserId === this.userAccountAddress;
+    },
+    userIsBillboardOwner() {
+      const currentBillboardOwnerId = _.get(this.selectedBillboard, 'currentAd.advertiserUserId');
+      if (!currentBillboardOwnerId && this.userIsSiteOwner) return true;
+      return currentBillboardOwnerId === this.userAccountAddress;
     },
     ctaButtonText() {
-      if (this.userOwnsCurrentAd) {
+      if (this.userIsBillboardOwner && this.userIsSiteOwner) {
+        return this.showForm ? 'Confim Changes' : 'Update property settings';
+      } if (this.userIsBillboardOwner) {
         return this.showForm ? 'Confim Changes' : 'Update Ad Content';
+      } else if (this.userIsSiteOwner) {
+        return this.showForm ? 'Confirm Purhcase' : 'Repurchase your site\'s ad space';
       }
       return this.showForm ? 'Confirm Purchase' : 'Purchase this ad property';
     },
@@ -143,7 +176,28 @@ export default {
         this.showForm = true;
       }
 
-      // if (this.$hasError()) return;
+      if (this.$hasError()) return;
+
+      if (!this.userIsBillboardOwner) {
+        await this.$store.dispatch('buyBillboard', {
+          billboardId: this.billboardId,
+          price: toWei(this.formPayload.price),
+        });
+      } else if (this.formPayload.price !== null) {
+        await this.$store.dispatch('setBillboardPrice', {
+          billboardId: this.billboardId,
+          price: toWei(this.formPayload.price),
+        });
+      }
+
+      await this.$store.dispatch('updateBillboardAd', {
+        billboardId: this.billboardId,
+        ...this.formPayload,
+      });
+      if (this.updateBillboardRequest.isSuccess) {
+        this.showForm = false;
+        this.formPayload = {};
+      }
     },
   },
 };
@@ -189,5 +243,13 @@ export default {
   right: 0;
   background: rgba(0,0,0,.7);
 }
+.empty-notice {
+  background: @bgblack;
+  padding: 10px 15px;
+  text-align: center;
+  h2 { padding: 0; margin: 0; }
+  p { margin: 0;}
+}
+
 
 </style>
