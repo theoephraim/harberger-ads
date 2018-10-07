@@ -48,7 +48,7 @@ const components = {};
 export default {
   components,
   metaInfo: {
-    title: 'Harberger Ads',
+    title: 'Harberger Ads Marketplace',
   },
   data() {
     return {};

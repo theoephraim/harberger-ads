@@ -14,6 +14,8 @@
           span.logotype HA
         div.col.col-10.align-right
           ul.caps.inline
+            li
+              router-link(:to='{name: "about"}') About
             template(v-if='!userIsLoggedIn')
               li
                 a(href='#' @click.prevent="signIn") Sign in
@@ -77,6 +79,7 @@ export default {
     },
     setSearchFilter(val) {
       this.$store.dispatch('setSearchFilter', val);
+      this.$router.push({ name: 'home' });
     },
   },
 };
