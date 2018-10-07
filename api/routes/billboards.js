@@ -31,4 +31,16 @@ module.exports = function initRoutes(router) {
   router.get('/billboards/:billboardId', async (ctx, next) => {
     ctx.body = ctx.$.billboard;
   });
+
+  router.post('/billboards', loggedInOnly, async (ctx, next) => {
+    validate(ctx.request.body, {
+      url: { isUrl: true, required: true },
+      pixelWidth: { min: 100, required: true },
+      pixelHeight: { min: 100, required: true },
+      name: { required: true },
+      description: {},
+      type: { isEnum: Models.Billboard.col('type') },
+      price: { toFloat: true, min: 0 },
+    });
+  });
 };

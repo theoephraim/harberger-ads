@@ -187,4 +187,9 @@ export default {
     url: `/billboards/${payload.billboardId}`,
   })),
 
+  createBillboard: makeAsyncAction(types.CREATE_BILLBOARD, (ctx, payload) => ({
+    method: 'post',
+    url: '/billboards',
+  })),
+
 };

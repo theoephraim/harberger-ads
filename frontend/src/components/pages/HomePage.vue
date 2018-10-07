@@ -36,9 +36,11 @@ main-layout
       table-column2(show='taxRate' label='Tax' type='percent')
       table-column2(show='tradeCount' label='Trades' type='numabbr')
 
-      table-column(label='Actions')
+      table-column(:sortable='false')
         template(slot-scope='row')
-          v-button(:to='{name: "listing-details", params: { billboardId: row.id } }' size='small') Details
+          v-button.shadow(
+            :to='{name: "listing-details", params: { billboardId: row.id } }'
+          ) Buy This Ad Space
 
 </template>
 
