@@ -112,7 +112,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,.9);
+  background: rgba(31,31,31,0.95);
 }
 
 
@@ -151,6 +151,12 @@ export default {
     flex: 50% 0 0;
     &:first-child {
       border-right: 1px solid @bordercolor;
+    }
+  }
+  &.full-border {
+    border: 1px solid @bordercolor;
+    .form-row:first-child {
+      border-top: none;
     }
   }
 }

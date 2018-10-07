@@ -15,6 +15,7 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "axios": "^0.17.1",
+    "basscss": "^8.0.10",
     "bignumber.js": "^7.2.1",
     "camelcase-keys-deep": "^0.1.0",
     "chart.js": "^2.7.2",

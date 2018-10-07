@@ -4,12 +4,36 @@
   .overlay-content
     .overlay-header
       router-link.overlay-exit(:to="{name: 'home'}") Back
-      h2 Ad Space Details
-
       template(v-if='!fetchBillboardRequest.wasRequested || fetchBillboardRequest.isPending')
         p Loading...
       template(v-else)
-        p {{ selectedBillboard.name }}
+        .overlay-form.full-border
+          .col-8
+            form-row
+              form-input.bg-circles.placeholder(
+                type='container' noLabel=true
+              )
+          .col-4.border-left
+            form-row
+              form-input.align-left(
+                type='container' noLabel=true
+              )  {{ selectedBillboard.name || 'Billboard Title' }}
+            form-row
+              form-input.align-left.big.border-none(
+                type='container' label='Price'
+              ) {{ selectedBillboard.price || '--' }}
+
+              form-input.align-left.big.border-none(
+                type='container' label='Views/Day'
+              ) {{ selectedBillboard.views || '--' }}
+
+              form-input.align-left.big.border-none(
+                type='container' label='Clicks/Day'
+              ) {{ selectedBillboard.clicks || '--' }}
+            form-row
+              form-input.align-left(
+                type='container' noLabel=true
+              ) {{ selectedBillboard.description || 'Billboard Description...' }}
 
 </template>
 
@@ -48,5 +72,7 @@ export default {
 </script>
 
 <style lang='less'>
-
+  .placeholder {
+    min-height: 50vh;
+  }
 </style>

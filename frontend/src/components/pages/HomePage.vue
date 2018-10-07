@@ -5,7 +5,22 @@ main-layout
   div(v-if='!fetchBillboardsRequest.wasRequested || fetchBillboardsRequest.isPending')
     h2 Loading...
   div(v-else)
-    h3 Loaded!
+    //- h3 Loaded!
+
+    div#menu.sticky
+      div.row.clearfix
+        div.col.col-2
+          span.logotype HA
+        div.col.col-10.align-right
+          ul.caps.inline
+            li
+              a.active Everything
+            li
+              a My Ads
+            li
+              a My Billboards
+            li
+              a List New
 
     table-component(
       :data='billboards'
@@ -77,5 +92,11 @@ export default {
 </script>
 
 <style lang='less'>
+
+.logotype {
+  display: inline-block;
+  transform: rotateZ(-25deg);
+  transform-origin: 50%;
+}
 
 </style>

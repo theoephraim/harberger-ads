@@ -3,7 +3,7 @@
   .flex-wrap
     .splash
       .big-board(v-html="require('@/assets/images/ha-board.svg')")
-    .menu-bar
+    .menu-bar.center
       v-button(to-named-route='new-listing') Sell Ad Space
       template(v-if='!userIsLoggedIn')
         v-button(@click="signIn") Sign in
@@ -169,7 +169,7 @@ export default {
 
 
 .splash {
-  height: 50vh;
+  height: 80vh;
   display: flex;
   align-items: center;
   .big-board {
@@ -179,6 +179,26 @@ export default {
     svg {
       max-height: 100%;
       max-width: 100%;
+    }
+  }
+}
+
+.menu-bar {
+  &>* {
+    min-width: 180px;
+  }
+
+  .button {
+    margin-right: 0;
+    border-right: 0;
+
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+
+    &:last-child {
+      border-right: 1px solid @bordercolor;
+      border-radius: 0 6px 6px 0;
     }
   }
 }
