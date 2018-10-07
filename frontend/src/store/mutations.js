@@ -61,7 +61,7 @@ export default {
   // API ACTIONS ///////////////////////////////////////////////////////////////
   ...makeAsyncMutations(types.FETCH_THE_GRAPH, (state, { response }) => {
     state.graphProperties = _.keyBy(response.data.properties, 'propertyId');
-    state.graphUsers = _.keyBy(response.data.users, 'address');
+    state.graphUsers = _.keyBy(response.data.users, 'id');
   }),
   ...makeAsyncMutations(types.FETCH_BILLBOARDS, (state, { response }) => {
     state.billboards = _.keyBy(response, 'id');

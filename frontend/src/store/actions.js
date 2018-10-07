@@ -8,6 +8,7 @@ import _ from 'lodash';
 
 // import * as contracts from 'ha-contracts';
 import HarbergerAdsContract from '@/contracts/HarbergerAds.json';
+import ERC20Contract from '@/contracts/ERC20.json';
 import { makeAsyncAction } from '@/utils/vuex-api-utils';
 import BigNumber from 'bignumber.js';
 import utils from 'web3-utils';
@@ -122,7 +123,11 @@ export default {
         HarbergerAdsContract.abi,
         HarbergerAdsContract.networks[state.networkId].address,
       );
-      // console.log(HarbergerAdsContract.instance.methods);
+      ERC20Contract.instance = new global.web3.eth.Contract(
+        ERC20Contract.abi,
+        ERC20Contract.networks[state.networkId].address,
+      );
+      global.contracts = { ERC20Contract, HarbergerAdsContract };
       // console.log('instantiated HarbergerAdsContract', HarbergerAdsContract);
     } else {
       console.log(`${name} not deployed on this network`);
@@ -163,7 +168,7 @@ export default {
     );
   },
 
-  async ensureWeb3Connected({ state, dispatch }) {
+  async allowERC20({ state, commit, dispatch }) {
     if (!(await dispatch('checkWeb3'))) {
       dispatch('selfDestructMsg', {
         title: 'Error',
@@ -181,29 +186,57 @@ export default {
       });
       throw new Error('No ETH account');
     }
+    await ERC20Contract.instance.methods.approve(HarbergerAdsContract.instance._address, utils.toWei('1000000000000000000')).send({
+      from: account,
+    });
+    return dispatch('fetchTheGraph');
   },
-
 
   async addProperty({ state, commit, dispatch }, price) {
-    await dispatch('ensureWeb3Connected');
+    if (!(await dispatch('checkWeb3'))) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'Web3 not available',
+      });
+      throw new Error('Web3 not available');
+    }
+    const { account } = state;
+    if (!account) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'No ETH account to sign in with',
+      });
+      throw new Error('No ETH account');
+    }
     return HarbergerAdsContract.instance.methods.addProperty(utils.toWei(price.toString())).send({
-      from: state.account,
+      from: account,
     });
   },
-  async buyBillboard({ state, commit, dispatch }, { billboardId, price }) {
-    await dispatch('ensureWeb3Connected');
-    return HarbergerAdsContract.instance.methods.buy(billboardId, price, price).send({
-      from: state.account,
+  async buyBillboard({ state, commit, dispatch }, { id, currentPrice, newPrice }) {
+    // console.log(id, currentPrice, newPrice);
+    if (!(await dispatch('checkWeb3'))) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'Web3 not available',
+      });
+      throw new Error('Web3 not available');
+    }
+    const { account } = state;
+    if (!account) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'No ETH account to sign in with',
+      });
+      throw new Error('No ETH account');
+    }
+    return HarbergerAdsContract.instance.methods.buy(parseInt(id), newPrice, newPrice).send({
+      from: account,
     });
   },
-  async setBillboardPrice({ state, commit, dispatch }, { billboardId, price }) {
-    // console.log(billboardId, price);
-    await dispatch('ensureWeb3Connected');
-    return HarbergerAdsContract.instance.methods.buy(billboardId, price, price).send({
-      from: state.account,
-    });
-  },
-
 
   // logs
   selfDestructMsg({ commit }, msg) {
@@ -257,11 +290,5 @@ export default {
     url: '/api/billboards',
     params: payload,
   })),
-  updateBillboardAd: makeAsyncAction(types.UPDATE_BILLBOARD_AD, (ctx, payload) => ({
-    method: 'post',
-    url: `/api/billboards/${payload.billboardId}/set-ad`,
-    params: _.omit(payload, 'billboardId'),
-  })),
-
 
 };

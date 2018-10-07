@@ -76,7 +76,7 @@
               .tiny {{ selectedBillboard.description || 'No description...' }}
       v-button.overlay-cta(
         @click='buttonHandler'
-        :disabled='$vv.$error'
+        :disabled='$vv.$error || insufficientBalance'
       ) {{ ctaButtonText }}
       //- :loading='createBillboardRequest.isPending' loading-text='Creating your new cash cow...'
       .overlay-under-cta(v-if='showForm')
@@ -90,11 +90,11 @@
 
 <script>
 import _ from 'lodash';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
-import { toWei } from '@/utils';
+import { toWei, makeBn } from '@/utils';
 
 const components = {
   Popup: require('@/components/general/Popup').default,
@@ -120,11 +120,25 @@ export default {
     };
   },
   computed: {
+    insufficientBalance() {
+      let price = toWei(this.selectedBillboard.price);
+      price = makeBn(price);
+      const balance = makeBn(this.balance);
+      return balance.lt(price);
+    },
+    balance() {
+      if (!this.graphUsers[this.account]) return 0;
+      return this.graphUsers[this.account].balance;
+    },
+    allowance() {
+      if (!this.graphUsers[this.account]) return 0;
+      return this.graphUsers[this.account].allowance;
+    },
     origin() {
       // return window.location.origin;
       return 'https://hads.xyz/api/i';
     },
-
+    ...mapState(['graphUsers', 'account']),
     ...mapGetters(['userIsLoggedIn', 'selectedBillboard', 'userAccountAddress']),
     ...mapRequestStatuses({
       fetchBillboardRequest: 'FETCH_BILLBOARD_DETAILS',
@@ -179,9 +193,22 @@ export default {
       if (this.$hasError()) return;
 
       if (!this.userIsBillboardOwner) {
+        let currentPrice = toWei(this.selectedBillboard.price);
+        currentPrice = makeBn(currentPrice);
+
+        const allowance = makeBn(this.allowance);
+        if (allowance.lt(currentPrice)) {
+          await this.$store.dispatch('allowERC20');
+        }
+
+        let newPrice = toWei(this.formPayload.price);
+        newPrice = newPrice.toString();
+        currentPrice = currentPrice.toString();
+
         await this.$store.dispatch('buyBillboard', {
-          billboardId: this.billboardId,
-          price: toWei(this.formPayload.price),
+          id: this.selectedBillboard.contractId,
+          currentPrice,
+          newPrice,
         });
       } else if (this.formPayload.price !== null) {
         await this.$store.dispatch('setBillboardPrice', {
