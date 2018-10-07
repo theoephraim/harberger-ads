@@ -87,6 +87,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('fetchBillboards');
+    this.$store.dispatch('fetchTheGraph');
   },
 };
 </script>

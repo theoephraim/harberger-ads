@@ -178,6 +178,28 @@ export default {
 
 
   // API ACTIONS ///////////////////////////////////////////////////////////////
+
+  fetchTheGraph: makeAsyncAction(types.FETCH_THE_GRAPH, (ctx, payload) => ({
+    method: 'post',
+    url: '$graph',
+    params: {
+      query: `{
+        properties {
+          id
+          price
+          propertyId
+          previousOwners
+        }
+        users {
+          id
+          address
+          allowance
+          balance
+        }
+      }`,
+    },
+  })),
+
   fetchBillboards: makeAsyncAction(types.FETCH_BILLBOARDS, (ctx, payload) => ({
     method: 'get',
     url: '/billboards',

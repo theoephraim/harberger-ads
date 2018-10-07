@@ -7,6 +7,7 @@ import { makeAsyncMutationTypes } from '@/utils/vuex-api-utils';
 
 export const LOGIN = makeAsyncMutationTypes('LOGIN');
 
+export const FETCH_THE_GRAPH = makeAsyncMutationTypes('FETCH_THE_GRAPH');
 export const FETCH_BILLBOARDS = makeAsyncMutationTypes('FETCH_BILLBOARDS');
 export const FETCH_AD_DETAILS = makeAsyncMutationTypes('FETCH_AD_DETAILS');
 

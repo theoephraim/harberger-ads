@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     saveButtonHandler() {
-      if (this.$hasError()) return;
+      // - if (this.$hasError()) return;
     },
   },
 };
