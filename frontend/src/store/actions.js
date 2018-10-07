@@ -122,7 +122,7 @@ export default {
         HarbergerAdsContract.abi,
         HarbergerAdsContract.networks[state.networkId].address,
       );
-      console.log('instantiated HarbergerAdsContract');
+      // console.log('instantiated HarbergerAdsContract', HarbergerAdsContract);
     } else {
       console.log(`${name} not deployed on this network`);
       throw new Error('wrong-network');
@@ -136,6 +136,7 @@ export default {
     const { account } = state;
     if (!account) {
       dispatch('selfDestructMsg', {
+        title: 'Error',
         type: 'error',
         msg: 'No ETH account to sign in with',
       });
@@ -161,6 +162,29 @@ export default {
     );
   },
 
+  async addProperty({ state, commit, dispatch }) {
+    if (!(await dispatch('checkWeb3'))) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'Web3 not available',
+      });
+      throw new Error('Web3 not available');
+    }
+    const { account } = state;
+    if (!account) {
+      dispatch('selfDestructMsg', {
+        title: 'Error',
+        type: 'error',
+        msg: 'No ETH account to sign in with',
+      });
+      throw new Error('No ETH account');
+    }
+    return HarbergerAdsContract.instance.methods.addProperty().send({
+      from: account,
+    });
+  },
+
   // logs
   selfDestructMsg({ commit }, msg) {
     const msgId = commit(types.ADD_MSG, msg);
@@ -181,7 +205,7 @@ export default {
 
   fetchTheGraph: makeAsyncAction(types.FETCH_THE_GRAPH, (ctx, payload) => ({
     method: 'post',
-    url: '$graph',
+    url: '/gapi',
     params: {
       query: `{
         properties {
@@ -203,16 +227,17 @@ export default {
 
   fetchBillboards: makeAsyncAction(types.FETCH_BILLBOARDS, (ctx, payload) => ({
     method: 'get',
-    url: '/billboards',
+    url: '/api/billboards',
   })),
   fetchBillboardDetails: makeAsyncAction(types.FETCH_BILLBOARD_DETAILS, (ctx, payload) => ({
     method: 'get',
-    url: `/billboards/${payload.billboardId}`,
+    url: `/api/billboards/${payload.billboardId}`,
   })),
 
   createBillboard: makeAsyncAction(types.CREATE_BILLBOARD, (ctx, payload) => ({
     method: 'post',
-    url: '/billboards',
+    url: '/api/billboards',
+    params: payload,
   })),
 
 };

@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const { Models } = require('../models');
 
-const { loggedInOnly } = require('../lib/auth-helpers');
+const { middleware, loggedInOnly } = require('../lib/auth-helpers');
 
 const { validate } = require('../lib/validation-helpers');
 
@@ -32,15 +32,20 @@ module.exports = function initRoutes(router) {
     ctx.body = ctx.$.billboard;
   });
 
-  router.post('/billboards', loggedInOnly, async (ctx, next) => {
+  router.post('/billboards', middleware, async (ctx, next) => {
     validate(ctx.request.body, {
-      url: { isUrl: true, required: true },
+      url: { isURL: true, required: true },
       pixelWidth: { min: 100, required: true },
       pixelHeight: { min: 100, required: true },
       name: { required: true },
       description: {},
       type: { isEnum: Models.Billboard.enumOptions('type') },
       price: { toFloat: true, min: 0 },
+      contractId: {},
+    }, { discardExtraProps: true });
+    ctx.body = await Models.Billboard.create({
+      ...ctx.request.body,
+      userId: ctx.$.authUser.id,
     });
   });
 };
