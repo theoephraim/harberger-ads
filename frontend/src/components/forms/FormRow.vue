@@ -40,7 +40,7 @@ export default {
 @border-color: rgba(0,0,0,.06);
 
 .form-row {
-  border-top: 1px solid @border-color;
+  border-top: 1px solid @bordercolor;
   width: 100%;
   position: relative;
 
@@ -54,15 +54,16 @@ export default {
       // padding: 0; // padding on individual inputs
     }
     @media @mq-medium {
-      padding: @row-pad 0;
+      padding: 0 0;
     }
 
     .form-input {
       flex: 1 0 0;
+      padding: 10px 15px;
 
       @media @mq-medium {
-        padding: 0 @row-pad;
-        border-left: 1px solid @border-color;
+
+        border-left: 1px solid @bordercolor;
         &:first-child {
           border-left: none;
         }
@@ -71,7 +72,7 @@ export default {
       @media @mq-small-only {
         padding: @row-pad;
         flex: 1 0 50%;
-        border-bottom: 1px solid @border-color;
+        border-bottom: 1px solid @bordercolor;
         // border-left: 1px solid rgba(0,0,0,.05);
 
         &:first-child {
@@ -99,12 +100,12 @@ export default {
     }
   }
   &.form-row--no-inputs > .form-row-inner {
-    padding: 10px @row-pad;
+    padding: 0px @row-pad;
     margin: 0;
     width: 100%;
     display: block;
     @media @mq-small-only {
-      padding: @row-pad;
+      // padding: @row-pad;
     }
     .error-message {
       display: block;

@@ -185,6 +185,8 @@ export default {
         return this.requiredMessage;
       } else if (this.$v.value.email === false) {
         return 'Invalid email address';
+      } else if (this.$v.value.url === false) {
+        return 'Invalid URL';
       } else if (this.$v.value.number === false) {
         return 'Must be a positive number without decimals';
       } else if (this.$v.value.integer === false) {
@@ -340,6 +342,7 @@ export default {
       ...this.type === 'integer' && { integer: validators.integer },
       ...this.type === 'money' && { money: validators.decimal },
       ...this.type === 'percent' && { percent: validators.decimal },
+      ...this.type === 'url' && { url: validators.url },
       ...this.min !== undefined && { min: validators.minValue(this.min) },
       ...this.max !== undefined && { max: validators.maxValue(this.max) },
       ...this.regex && { regex: validators.helpers.regex(this.value, new RegExp(this.regex)) },
@@ -370,7 +373,8 @@ export default {
 
   &.is-error {
     .form-input-input {
-      border-color: fade(@error-red-border, 40%);
+      border-color: @error-red-border;
+      border-color: rgba(0,0,0,0);
       color: @error-red-text;
     }
   }
@@ -388,29 +392,32 @@ export default {
   }
 }
 .form-input-input {
+  background: rgba(0,0,0,0);
   box-sizing: border-box;
   width: 100%;
-  border: 1px solid #DDD;
-  padding: 9px 8px 7px;
+  border: 1px solid #AAA;
+  border-color: rgba(0,0,0,0);
+  padding: 9px 0px 7px;
   height: 40px;
-  color: #444;
+  color: #FFF;
   // border-radius: 2px;
   font: inherit;
+  font-size: 14px;
 
   textarea& {
     min-height: 70px;
     display: block;
   }
   select& {
-    background: white;
-    font-size: 16px;
+    background: rgba(0,0,0,0);
+    font-size: 14px;
     padding-top: 0;
     padding-bottom: 0;
     padding-right: 20px; // so text doesnt go behind arrow
     -webkit-appearance: none;
 
     // dropdown arrow
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' fill='%23666'><polygon points='10,15 30,15 20,25'/></svg>") no-repeat;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' fill='%23FFF'><polygon points='10,15 30,15 20,25'/></svg>") no-repeat;
     background-size: 25px 25px;
     background-position: right center;
     background-repeat: no-repeat;
@@ -425,8 +432,8 @@ export default {
   }
 
   input[type='text']&, input[type='number']&, input[type='password']& {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 18px;
   }
 
   //- TODO: make height 44px for mobile
@@ -441,16 +448,17 @@ export default {
   }
 
   .form-input.is-focused & {
-    border-color: #AAA;
-    color: @border-blue;
+    // border-color: #FFF;
+    border-color: rgba(0,0,0,0);
+    // color: @border-blue;
   }
 }
 .form-input-label {
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: bold;
   display: block;
-  padding-bottom: 4px;
-  padding-left: 0px;
+  padding: 5px 0;
   // &:empty {
   //   height: 28px;
   //   @media @mq-small-only {
@@ -460,7 +468,7 @@ export default {
 }
 
 .form-input-instructions, .form-input-error {
-  font-size: 11px;
+  font-size: 10px;
   line-height: 14px;
   margin-top: 5px;
 }

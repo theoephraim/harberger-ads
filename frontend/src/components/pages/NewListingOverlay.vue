@@ -5,30 +5,45 @@
     .overlay-header
       router-link.overlay-exit(:to="{name: 'home'}") Back
       h2 List Your Site
-    .left
-      form-row
-        form-input(
-          type='text' v-model='listing.name'
-          label='Name'
-        )
-      form-row
-        form-input(
-          type='text' v-model='listing.price'
-          label='Starting Price'
-        )
-        form-input(
-          type='int' :min='100' :max='1200' v-model='listing.pixelWidth'
-          label='Width (px)'
-        )
-        form-input(
-          type='int' :min='100' :max='1200' v-model='listing.pixelWidth'
-          label='Height (px)'
-        )
-      form-row
-        form-input(
-          type='url' v-model='listing.url'
-          label='URL'
-        )
+    .overlay-form
+      .half
+        form-row
+          form-input(
+            type='text' v-model='listing.name'
+            label='Name'
+          )
+        form-row
+          form-input(
+            type='text' v-model='listing.price'
+            label='Starting Price'
+          )
+          form-input(
+            type='int' :min='100' :max='1200' v-model='listing.pixelWidth'
+            label='Width (px)'
+          )
+          form-input(
+            type='int' :min='100' :max='1200' v-model='listing.pixelHeight'
+            label='Height (px)'
+          )
+        form-row
+          form-input(
+            type='url' v-model='listing.url'
+            label='URL'
+          )
+      .half
+        form-row
+          form-input(
+            type='dropdown' v-model='listing.type'
+            label='Type'
+          )
+            form-input-option(:value='banner') Web Banner Ad
+            form-input-option(:value='sidebar') Web Sidebar Ad
+            form-input-option(:value='tv') Phyical Digital Display
+        form-row
+          form-input(type='textarea' v-model='description' label='Description')
+    .buttons
+      v-button(@click='save') cancel
+      v-button(@click='save') Save
 
 </template>
 
@@ -89,5 +104,22 @@ export default {
 
 }
 
+.buttons {
+  padding: 40px;
+  text-align: right;
+}
+
+.overlay-form {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid @bordercolor;
+  .half {
+    flex: 50% 0 0;
+    &:first-child {
+      border-right: 1px solid @bordercolor;
+    }
+  }
+
+}
 
 </style>
