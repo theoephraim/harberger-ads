@@ -169,7 +169,7 @@ export default {
         type: 'error',
         msg: 'Web3 not available',
       });
-      return;
+      throw new Error('Web3 not available');
     }
     const { account } = state;
     if (!account) {
@@ -178,12 +178,10 @@ export default {
         type: 'error',
         msg: 'No ETH account to sign in with',
       });
-      return;
+      throw new Error('No ETH account');
     }
-    await HarbergerAdsContract.instance.methods.addProperty().send({
+    return HarbergerAdsContract.instance.methods.addProperty().send({
       from: account,
-    }).then((res) => {
-      console.log(res);
     });
   },
 
@@ -238,6 +236,7 @@ export default {
   createBillboard: makeAsyncAction(types.CREATE_BILLBOARD, (ctx, payload) => ({
     method: 'post',
     url: '/billboards',
+    params: payload,
   })),
 
 };

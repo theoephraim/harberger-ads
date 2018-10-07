@@ -104,7 +104,10 @@ export default {
     saveButtonHandler() {
       if (this.$hasError()) return;
       this.processing = true;
-      this.addProperty().then(() => {
+      this.addProperty().then((data) => {
+        this.listing.contractId = data.events.Change.returnValues.id;
+        return this.createBillboard(this.listing);
+      }).then(() => {
         this.processing = false;
         this.cancel();
       }).catch((err) => {
@@ -119,6 +122,7 @@ export default {
 
     ...mapActions([
       'addProperty',
+      'createBillboard',
     ]),
   },
 };
