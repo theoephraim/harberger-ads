@@ -20,12 +20,12 @@
             required
           )
           form-input(
-            type='integer' :min='100' :max='1200' v-model='listing.pixelWidth'
+            type='integer' :min='100' :max='2000' v-model='listing.pixelWidth'
             label='Width (px)'
             required
           )
           form-input(
-            type='integer' :min='100' :max='1200' v-model='listing.pixelHeight'
+            type='integer' :min='100' :max='2000' v-model='listing.pixelHeight'
             label='Height (px)'
             required
           )
