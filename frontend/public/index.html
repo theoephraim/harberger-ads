@@ -2,18 +2,35 @@
 <html>
   <head>
     <title>Harberger ads space</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+      }
+
+      iframe {
+        margin: 0;
+        padding: 0;
+      }
+
+      #ad iframe {
+        width: 640px;
+        border: none;
+        margin: 0 auto;
+        display: block;
+      }
+    </style>
   </head>
   <body>
 
     <div>
+      <div id="ad">
+      <!-- Ad Content -->
+      <iframe src="https://hads.xyz/api/i?b=3" width="400" height="150"></iframe>
+      </div>
 
-      <h1>Harberger ads space</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <!-- Site Content -->
+      <iframe src="https://ethsanfrancisco.com/" frameborder="0" style="margin-left: -5vw; width: 110vw; height: 100vh;"></iframe>
     </div>
   </body>
 </html>
