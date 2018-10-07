@@ -39,7 +39,7 @@ module.exports = function initRoutes(router) {
       pixelHeight: { min: 100, required: true },
       name: { required: true },
       description: {},
-      type: { isEnum: Models.Billboard.col('type') },
+      type: { isEnum: Models.Billboard.enumOptions('type') },
       price: { toFloat: true, min: 0 },
     });
   });
