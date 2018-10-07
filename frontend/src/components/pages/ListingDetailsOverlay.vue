@@ -71,9 +71,7 @@
       //- :loading='createBillboardRequest.isPending' loading-text='Creating your new cash cow...'
       .overlay-under-cta(v-if='showForm')
         p.small <a href='#' @click.prevent='showForm = false'>or cancel</a>
-
             //- v-button(@click="buy") Buy
-
 </template>
 
 <script>
@@ -118,6 +116,11 @@ export default {
       return this.showForm ? 'Confirm Purchase' : 'Purchase this ad property';
     },
   },
+  mounted() {
+    this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId }).then(() => {
+      this.price = this.selectedBillboard && this.selectedBillboard.price;
+    });
+  },
   methods: {
     buy() {
       this.buyBillboard({ id: this.billboardId, price: toWei(this.price) });
@@ -126,30 +129,21 @@ export default {
     ...mapActions([
       'buyBillboard',
     ]),
-  },
-  mounted() {
-    this.$store.dispatch('fetchBillboardDetails', { billboardId: this.billboardId }).then(() => {
-      this.price = this.selectedBillboard && this.selectedBillboard.price;
-    });
-  },
-  methods: {
     purchaseButtonHandler() {
       if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
       if (!this.showPurchaseForm) {
         this.showPurchaseForm = true;
-        return;
       }
 
-      if (this.$hasError()) return;
+      // if (this.$hasError()) return;
     },
     buttonHandler() {
       if (!this.userIsLoggedIn) this.$store.dispatch('signIn');
       if (!this.showForm) {
         this.showForm = true;
-        return;
       }
 
-      if (this.$hasError()) return;
+      // if (this.$hasError()) return;
     },
   },
 };
