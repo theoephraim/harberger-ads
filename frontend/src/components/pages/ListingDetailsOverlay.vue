@@ -1,7 +1,7 @@
 <template lang='pug'>
 .overlay
   .overlay-screen
-  .overlay-content
+  .overlay-content(v-if="!processing")
     router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
     .overlay-header
       h2 Ad Property Details
@@ -87,6 +87,13 @@
         h3 Embed code:
         pre #{'<iframe src="{{ origin }}?b={{ billboardId }}" width="{{ selectedBillboard.pixelWidth }}" height="{{ selectedBillboard.pixelHeight }}"></iframe>'}
 
+  .overlay-content(v-else)
+    .align-center
+      p.h1 Processing...
+      div
+        p.sending.h1 ✨
+        p Your transaction is being processed. Please confirm with MetaMask!
+
 </template>
 
 <script>
@@ -118,6 +125,7 @@ export default {
         mediaUrl: null,
       },
       showForm: false,
+      processing: false,
     };
   },
   computed: {
@@ -165,22 +173,31 @@ export default {
 
       if (this.$hasError()) return;
 
-      if (!this.userIsBillboardOwner) {
-        await this.$store.dispatch('buyBillboard', {
-          billboardId: this.billboardId,
-          price: toWei(this.formPayload.price),
-        });
-      } else if (this.formPayload.price !== null) {
-        await this.$store.dispatch('setBillboardPrice', {
-          billboardId: this.billboardId,
-          price: toWei(this.formPayload.price),
-        });
+      try {
+        if (!this.userIsBillboardOwner) {
+          this.processing = true;
+          await this.$store.dispatch('buyBillboard', {
+            billboardId: this.billboardId,
+            price: toWei(this.formPayload.price),
+          });
+        } else if (this.formPayload.price !== null) {
+          this.processing = true;
+          await this.$store.dispatch('setBillboardPrice', {
+            billboardId: this.billboardId,
+            price: toWei(this.formPayload.price),
+          });
+        }
+      } catch (err) {
+        console.log(err);
+        this.processing = false;
+        return false;
       }
 
       await this.$store.dispatch('updateBillboardAd', {
         billboardId: this.billboardId,
         ...this.formPayload,
       });
+      this.processing = false;
       if (this.updateBillboardRequest.isSuccess) {
         this.showForm = false;
         this.formPayload = {};
