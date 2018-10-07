@@ -198,9 +198,9 @@ export default {
       } else if (this.$v.value.percent === false) {
         return 'Must be a valid percentage';
       } else if (this.$v.value.min === false) {
-        return `Must be greater than or equal to ${this.min}`;
+        return `Must be >= ${this.min}`;
       } else if (this.$v.value.max === false) {
-        return `Must be less than or equal to ${this.max}`;
+        return `Must be <= ${this.max}`;
       } else if (this.$v.value.regex === false) {
         return this.regexMessage;
       }
@@ -375,7 +375,7 @@ export default {
     .form-input-input {
       border-color: @error-red-border;
       border-color: rgba(0,0,0,0);
-      color: @error-red-text;
+      // color: @error-red-text;
     }
   }
 
@@ -440,7 +440,7 @@ export default {
 
 
   &::placeholder {
-    color: #BBB;
+    color: #666;
   }
 
   &:focus {

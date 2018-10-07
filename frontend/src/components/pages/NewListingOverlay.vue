@@ -2,56 +2,67 @@
 .overlay
   .overlay-screen
   .overlay-content
-    .overlay-header
-      router-link.overlay-exit(:to="{name: 'home'}") Back
-      h2 List Your Site
+    router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
+    h2.overlay-header List Your Site
     .overlay-form
       .half
         form-row
           form-input(
             type='text' v-model='listing.name'
-            label='Name'
+            label='Name' placeholder='Ex: example.com homepage banner'
+            required
           )
         form-row
           form-input(
-            type='text' v-model='listing.price'
+            type='money' v-model='listing.price'
             label='Starting Price'
+            :min='0'
+            required
           )
           form-input(
-            type='int' :min='100' :max='1200' v-model='listing.pixelWidth'
+            type='integer' :min='100' :max='1200' v-model='listing.pixelWidth'
             label='Width (px)'
+            required
           )
           form-input(
-            type='int' :min='100' :max='1200' v-model='listing.pixelHeight'
+            type='integer' :min='100' :max='1200' v-model='listing.pixelHeight'
             label='Height (px)'
+            required
           )
         form-row
           form-input(
             type='url' v-model='listing.url'
-            label='URL'
+            label='URL' placeholder='https://example.com'
+            required
           )
       .half
         form-row
           form-input(
             type='dropdown' v-model='listing.type'
             label='Type'
+            auto-select
           )
-            form-input-option(:value='banner') Web Banner Ad
-            form-input-option(:value='sidebar') Web Sidebar Ad
-            form-input-option(:value='tv') Phyical Digital Display
+            form-input-option(value='banner') Web Banner Ad
+            form-input-option(value='sidebar') Web Sidebar Ad
+            form-input-option(value='tv') Physical Digital Display
         form-row
-          form-input(type='textarea' v-model='description' label='Description')
-    .buttons
-      v-button(@click='save') cancel
-      v-button(@click='save') Save
+          form-input(
+            type='textarea' v-model='listing.description'
+            label='Description' placeholder='something about your site and audience?'
+          )
+    v-button.overlay-cta(
+      @click='saveButtonHandler'
+      :loading='createBillboardRequest.isPending' loading-text='Creating your new cash cow...'
+      :disabled='$vv.$error'
+    ) Save
 
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
-import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
+import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
 
 const components = {
   Popup: require('@/components/general/Popup').default,
@@ -59,6 +70,7 @@ const components = {
 
 export default {
   components,
+  mixins: [vuelidateGroupMixin],
   metaInfo: {
     title: 'List your ad space',
   },
@@ -71,9 +83,15 @@ export default {
     ...mapGetters(['billboards']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
+      createBillboardRequest: 'CREATE_BILLBOARD',
     }),
   },
   mounted() {
+  },
+  methods: {
+    saveButtonHandler() {
+      if (this.$hasError()) return;
+    },
   },
 };
 </script>
@@ -92,16 +110,27 @@ export default {
   background: rgba(31,31,31,0.95);
 }
 
+
 .overlay-content {
   position: absolute;
   z-index: 200;
-  top: 10vh;
+  top: 20px;
+  padding-top: 10vh;
   left: 20px;
   right: 20px;
 }
 
-.new-listing {
+.overlay-exit {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 20px;
+}
 
+
+
+.overlay-header {
+  text-align: center;
 }
 
 .buttons {
@@ -125,7 +154,15 @@ export default {
       border-top: none;
     }
   }
-
+}
+.overlay-cta {
+  width: 100%;
+  border-top: 0;
+  width: 90%;
+  display: block;
+  margin: 0 auto;
+  padding: 20px 0;
+  font-weight: bold;
 }
 
 </style>
