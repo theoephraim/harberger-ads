@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import HomePage from './components/pages/HomePage';
 import NotFoundPage from './components/pages/NotFoundPage';
+import HowItWorksPage from './components/pages/HowItWorksPage';
 import NewListingOverlay from './components/pages/NewListingOverlay';
 import ListingDetailsOverlay from './components/pages/ListingDetailsOverlay';
 
@@ -25,6 +26,7 @@ const router = new Router({
         { path: 'list-your-space', name: 'new-listing', component: NewListingOverlay },
       ],
     },
+    { path: '/about', name: 'about', component: HowItWorksPage },
     { path: '*', name: 'not-found', component: NotFoundPage },
   ],
 });
