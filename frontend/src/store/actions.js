@@ -7,6 +7,7 @@
 import _ from 'lodash';
 
 // import * as contracts from 'ha-contracts';
+import HarbergerAdsContract from '@/contracts/HarbergerAds.json';
 import { makeAsyncAction } from '@/utils/vuex-api-utils';
 import BigNumber from 'bignumber.js';
 import utils from 'web3-utils';
@@ -120,25 +121,21 @@ export default {
       }, 500);
     });
   },
-  // async getContracts({ dispatch, state, commit }) {
-  //   commit(types.CONTRACTS_DEPLOYED, false);
-  //   for (const name in contracts) {
-  //     if (!contracts.hasOwnProperty(name)) continue;
-  //     const contract = contracts[name];
-  //     if (contract.networks[state.networkId]) {
-  //       contract.instance = new global.web3.eth.Contract(
-  //         contract.abi,
-  //         contract.networks[state.networkId].address,
-  //       );
-  //       console.log(`instantiated ${name}`);
-  //     } else {
-  //       console.log(`${name} not deployed on this network`);
-  //       throw new Error('wrong-network');
-  //     }
-  //   }
-  //   commit(CONTRACTS_DEPLOYED, true);
-  //   console.log('getContracts ended');
-  // },
+  async getContracts({ dispatch, state, commit }) {
+    commit(types.CONTRACTS_DEPLOYED, false);
+    if (HarbergerAdsContract.networks[state.networkId]) {
+      HarbergerAdsContract.instance = new global.web3.eth.Contract(
+        HarbergerAdsContract.abi,
+        HarbergerAdsContract.networks[state.networkId].address,
+      );
+      console.log('instantiated HarbergerAdsContract');
+    } else {
+      console.log(`${name} not deployed on this network`);
+      throw new Error('wrong-network');
+    }
+
+    commit(types.CONTRACTS_DEPLOYED, true);
+  },
 
   async signIn({ state, commit, dispatch }) {
     if (!(await dispatch('checkWeb3'))) throw new Error('Transaction Failed');
