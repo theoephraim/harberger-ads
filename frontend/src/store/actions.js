@@ -186,6 +186,7 @@ export default {
       query: `{
         properties {
           id
+          owner
           price
           propertyId
           previousOwners

@@ -57,8 +57,6 @@
     ) Save
     .login-notice(v-if='!userIsLoggedIn')
       p.small Please <a href='#' @click.prevent='$store.dispatch("signIn")'>finish authentication</a> via metamask
-
-
 </template>
 
 <script>

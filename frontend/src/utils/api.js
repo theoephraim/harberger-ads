@@ -26,7 +26,7 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.request.use((config) => {
-  if (config.url.indexOf('$graph' > -1)) {
+  if (config.url.indexOf('$graph') > -1) {
     config.headers['Content-Type'] = 'application/graphql';
     config.url = 'http://10.7.14.217:8000/harberger-ads/graphql';
   } else {

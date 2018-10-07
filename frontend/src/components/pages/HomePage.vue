@@ -56,7 +56,6 @@ main-layout
           v-button.shadow(
             :to='{name: "listing-details", params: { billboardId: row.id } }'
           ) Buy This Ad Space
-
 </template>
 
 <script>
