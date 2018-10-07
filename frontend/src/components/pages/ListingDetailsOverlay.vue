@@ -57,7 +57,7 @@
             )
               span.bold {{ selectedBillboard.name || 'No Name' }}
               br
-              a.small(:href='selectedBillboard.url' target='_blank') view this property
+              a.small(:href='selectedBillboard.url' target='_blank' v-text="selectedBillboard.url")
           form-row
             form-input.align-left.big.border-none(
               type='container' label='Current Price'
@@ -123,7 +123,7 @@ export default {
   computed: {
     origin() {
       // return window.location.origin;
-      return 'https://hads.xyz';
+      return 'https://hads.xyz/api/i';
     },
 
     ...mapGetters(['userIsLoggedIn', 'selectedBillboard', 'userAccountAddress']),
