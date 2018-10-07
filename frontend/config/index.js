@@ -17,6 +17,13 @@ module.exports = {
           '^/api/': '/',
         },
       },
+      '/gapi': {
+        target: 'http://10.7.14.217:8000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/gapi': '/harberger-ads/graphql',
+        },
+      }
     },
 
     // Various Dev Server settings
