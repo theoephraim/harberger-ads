@@ -15,25 +15,25 @@
               )
           .col-4.border-left
             form-row
-              form-input(
+              form-input.align-left(
                 type='container' noLabel=true
               )  {{ selectedBillboard.name || 'Billboard Title' }}
             form-row
-              form-input.big.border-none(
-                type='container' label='Value'
-              ) $72.00
+              form-input.align-left.big.border-none(
+                type='container' label='Price'
+              ) {{ selectedBillboard.price || '--' }}
 
-              form-input.big.border-none(
+              form-input.align-left.big.border-none(
                 type='container' label='Views/Day'
-              ) 23k
+              ) {{ selectedBillboard.views || '--' }}
 
-              form-input.big.border-none(
+              form-input.align-left.big.border-none(
                 type='container' label='Clicks/Day'
-              ) 2k
+              ) {{ selectedBillboard.clicks || '--' }}
             form-row
-              form-input(
+              form-input.align-left(
                 type='container' noLabel=true
-              ) {{ selectedBillboard.name || 'Billboard Description...' }}
+              ) {{ selectedBillboard.description || 'Billboard Description...' }}
 
 </template>
 
