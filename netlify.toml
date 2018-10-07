@@ -19,3 +19,9 @@
 # SEE https://www.netlify.com/docs/redirects/
 # rewrite from /pagename to /pagename.html is done automatically
 # fallback to 404.html is done automatically
+[[redirects]]
+  from = "/api/*"
+  to = "http://165.227.25.201:7777/:splat"
+[[redirects]]
+  from = "/gapi/*"
+  to = "http://104.198.242.70/harberger-ads/graphql/:splat"
