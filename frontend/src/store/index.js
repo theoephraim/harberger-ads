@@ -21,7 +21,6 @@ const initialState = {
   // ETH address, if metamaskin'
   account: null,
   signatures: getSignatures(),
-  // bloomID: null,
   unlocked: false,
 
   networkId: null,
