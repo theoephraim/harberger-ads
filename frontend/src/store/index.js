@@ -7,6 +7,11 @@ import mutations from './mutations';
 
 Vue.use(Vuex);
 
+function getSignatures(key = 'ha-signatures') {
+  if (!window.localStorage) return {};
+  return JSON.parse(window.localStorage.getItem(key));
+}
+
 const initialState = {
   // initialize an object to track request state for each api related action
   requests: {}, // keyed by request type (and sometimes more)
@@ -15,24 +20,16 @@ const initialState = {
 
   // ETH address, if metamaskin'
   account: null,
-  signatures: {},
+  signatures: getSignatures(),
   // bloomID: null,
   unlocked: false,
 
   networkId: null,
   waitToPing: true,
   contractsDeployed: false,
+  correctNetwork: 4,
 
-  messages: [{
-    id: 0,
-    title: 'Welcome',
-    msg: 'This is Harberger Ads',
-  }, {
-    id: 1,
-    title: 'Look around you',
-    msg: 'and profit',
-    type: 'progress',
-  }],
+  messages: [],
 
   authToken: null,
   user: {},

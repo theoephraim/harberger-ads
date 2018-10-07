@@ -5,6 +5,7 @@ main-layout
   .menu-bar
     v-button Sell Ad Space
     v-button Buy Ads
+    v-button(@click="signIn") Sign in
 
   div(v-if='!fetchBillboardsRequest.wasRequested || fetchBillboardsRequest.isPending')
     h2 Loading...
@@ -36,7 +37,7 @@ main-layout
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
@@ -59,6 +60,11 @@ export default {
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
     }),
+  },
+  methods: {
+    ...mapActions([
+      'signIn',
+    ]),
   },
   mounted() {
     this.$store.dispatch('fetchBillboards');
