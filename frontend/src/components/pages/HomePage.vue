@@ -31,7 +31,10 @@ main-layout
 
           v-button.shadow(
             :to='{name: "listing-details", params: { billboardId: row.id } }'
-          ) {{ row.ownerXaddress === userAccountAddress ? 'Manage' : 'Purchase' }}
+          )
+            span(v-if='row.siteOwnerUserId === userAccountAddress') Details
+            span(v-else-if='row.currentAd.advertiserUserId === userAccountAddress') Manage Content
+            span(v-else) Purchase
 </template>
 
 <script>

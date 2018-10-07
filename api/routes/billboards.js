@@ -4,6 +4,7 @@ const { Models, sequelize } = require('../models');
 const { loggedInOnly } = require('../lib/auth-helpers');
 
 const { validate } = require('../lib/validation-helpers');
+const prasync = require('../lib/prasync');
 
 module.exports = function initRoutes(router) {
   router.get('/billboards', async (ctx, next) => {
@@ -12,6 +13,7 @@ module.exports = function initRoutes(router) {
       SELECT
         b.id,
         count(i.id) AS views,
+        count(a.id) AS trades,
         SUM(CASE WHEN clicked_at IS NOT NULL THEN 1 ELSE 0 END) AS clicks
       FROM
         billboards b
@@ -23,6 +25,8 @@ module.exports = function initRoutes(router) {
     _.each(billboards, (b) => {
       b.calcs.stats = statsByBillboardId[b.id] || {};
     });
+
+    await prasync.each(billboards, async (b) => b.populateRef('currentAd'));
 
     ctx.body = billboards;
   });
@@ -72,6 +76,8 @@ module.exports = function initRoutes(router) {
       linkUrl: { isURL: true, required: true },
       price: { toFloat: true, min: 0 },
     }, { discardExtraProps: true });
+
+    await ctx.$.billboard.update({ price: ctx.request.body.price });
 
     const newAd = await Models.Ad.create({
       ...ctx.request.body,

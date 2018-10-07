@@ -27,6 +27,7 @@ module.exports = {
     currentAd() { return this.refs.currentAd || {}; },
     clickCount() { return _.get(this.calcs, 'stats.clicks', 0); },
     viewCount() { return _.get(this.calcs, 'stats.views', 0); },
+    tradeCount() { return _.get(this.calcs, 'stats.trades', 0); },
   },
   complexRefs: {
     async currentAd() {
@@ -43,7 +44,8 @@ module.exports = {
       [this.calcs.stats] = await sequelize.query(`
         SELECT
           count(*) AS views,
-          SUM(CASE WHEN clicked_at IS NOT NULL THEN 1 ELSE 0 END) AS clicks
+          SUM(CASE WHEN clicked_at IS NOT NULL THEN 1 ELSE 0 END) AS clicks,
+          count(a.id) AS trades
         FROM
           impressions i
           LEFT JOIN ads a ON i.ad_id = a.id

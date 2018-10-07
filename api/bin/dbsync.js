@@ -42,6 +42,7 @@ const { Models, sequelize, dbReady } = require('../models');
     type: 'sidebar',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 100,
   });
 
   const billboard2 = await Models.Billboard.create({
@@ -51,6 +52,7 @@ const { Models, sequelize, dbReady } = require('../models');
     type: 'sidebar',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 10,
   });
 
   const billboard3 = await Models.Billboard.create({
@@ -60,6 +62,7 @@ const { Models, sequelize, dbReady } = require('../models');
     type: 'tv',
     pixelWidth: 1200,
     pixelHeight: 800,
+    price: 12.34,
   });
 
   const billboard4 = await Models.Billboard.create({
@@ -69,6 +72,7 @@ const { Models, sequelize, dbReady } = require('../models');
     type: 'sidebar',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 20,
   });
   const billboard5 = await Models.Billboard.create({
     siteOwnerUserId: siteOwnerUser2.id,
@@ -77,6 +81,7 @@ const { Models, sequelize, dbReady } = require('../models');
     type: 'banner',
     pixelWidth: 200,
     pixelHeight: 500,
+    price: 0.01,
   });
 
   for (let i = 0; i <= 20; i++) {
@@ -88,6 +93,7 @@ const { Models, sequelize, dbReady } = require('../models');
       type: 'banner',
       pixelWidth: 200,
       pixelHeight: 500,
+      price: parseFloat((1000 * Math.random()).toFixed(2)),
     });
   }
 
