@@ -38,6 +38,14 @@ const anonUser = {
 
 export default {
   // web3 stuff
+  async poll({ dispatch, commit }) {
+    if (!global.web3.currentProvider.isPortis) {
+      await dispatch('checkWeb3');
+      setTimeout(() => {
+        dispatch('poll');
+      }, 5000);
+    }
+  },
   async checkWeb3({ commit, dispatch }) {
     try {
       await dispatch('getAccount');
@@ -128,9 +136,7 @@ export default {
   //       throw new Error('wrong-network');
   //     }
   //   }
-  //   await dispatch('updateBasePrice');
-  //   await dispatch('updateStakeAmount');
-  //   commit('CONTRACTS_DEPLOYED', true);
+  //   commit(CONTRACTS_DEPLOYED, true);
   //   console.log('getContracts ended');
   // },
 
@@ -151,8 +157,9 @@ export default {
         from: account,
       },
       (err, { result }) => {
-        if (err) {
+        if (!result) {
           dispatch('selfDestructMsg', {
+            title: 'Error',
             type: 'error',
             msg: 'Could not sign in',
           });

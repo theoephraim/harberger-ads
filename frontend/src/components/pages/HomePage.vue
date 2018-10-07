@@ -5,6 +5,8 @@ main-layout
   .menu-bar
     v-button Sell Ad Space
     v-button Buy Ads
+    v-button(@click="signIn", v-if="!signedIn") Sign in
+    v-button(@click="signOut", v-else) Sign out
 
   div(v-if='!fetchBillboardsRequest.wasRequested || fetchBillboardsRequest.isPending')
     h2 Loading...
@@ -36,7 +38,7 @@ main-layout
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapMutations, mapGetters } from 'vuex';
 
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
@@ -55,9 +57,21 @@ export default {
     };
   },
   computed: {
+    signedIn() {
+      return !!this.$store.getters.authHeader;
+    },
+
     ...mapGetters(['billboards']),
     ...mapRequestStatuses({
       fetchBillboardsRequest: 'FETCH_BILLBOARDS',
+    }),
+  },
+  methods: {
+    ...mapActions([
+      'signIn',
+    ]),
+    ...mapMutations({
+      signOut: 'SIGN_OUT',
     }),
   },
   mounted() {

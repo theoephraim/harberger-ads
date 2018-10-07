@@ -6,6 +6,7 @@
 
 <script>
 // TODO: different favicon?
+import { mapActions } from 'vuex';
 import faviconUrl from '@/assets/images/favicon.png';
 import Messages from '@/components/Messages';
 
@@ -29,8 +30,14 @@ export default {
       { rel: 'shortcut icon', type: 'image/ico', href: faviconUrl },
     ],
   },
+  methods: {
+    ...mapActions([
+      'poll',
+    ]),
+  },
   mounted() {
     document.dispatchEvent(new Event('prerender-ready'));
+    this.poll();
   },
 };
 </script>

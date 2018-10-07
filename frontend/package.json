@@ -26,6 +26,7 @@
     "local-storage-fallback": "^4.1.0",
     "lodash": "^4.17.4",
     "polyfill-io-feature-detection": "^1.1.14",
+    "portis": "^1.2.13",
     "s-ago": "^1.2.2",
     "uuid": "^3.2.1",
     "vue": "^2.5.2",
@@ -36,6 +37,7 @@
     "vue-table-component": "git+https://git@github.com/theoephraim/vue-table-component.git",
     "vuelidate": "^0.7.4",
     "vuex": "^3.0.1",
+    "web3": "^1.0.0-beta.36",
     "web3-utils": "^1.0.0-beta.36",
     "xss": "^1.0.3"
   },

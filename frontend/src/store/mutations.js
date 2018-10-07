@@ -49,10 +49,12 @@ export default {
 
   [types.SIGN_IN]: (state, { account, signature }) => {
     state.signatures = { ...state.signatures, [account]: signature };
+    storage.setItem('ha-signatures', JSON.stringify(state.signatures));
   },
   [types.SIGN_OUT]: (state) => {
-    // if (!state.account) return;
-    // Vue.delete(state.tokens, state.account);
+    if (!state.account) return;
+    Vue.delete(state.signatures, state.account);
+    storage.removeItem('ha-signatures');
   },
 
   [types.ADD_MSG]: (state, msg) => {
