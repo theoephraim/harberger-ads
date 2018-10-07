@@ -6,6 +6,8 @@ const Sequelize = require('sequelize');
 const nconf = require('nconf');
 require('colors');
 
+require('pg').defaults.parseInt8 = true;
+
 const { logger } = require('../lib/logger');
 const { defineModel, initializeAssociations } = require('../lib/orm-wrap/define-model');
 const { connectionUrl, DB } = require('../config/database');
@@ -44,7 +46,6 @@ function logSql(...args) {
 // decimal types are being returned as strings?
 // https://github.com/sequelize/sequelize/issues/8019
 Sequelize.postgres.DECIMAL.parse = (value) => parseFloat(value);
-
 
 let dbUrl = connectionUrl;
 if (nconf.get('DB:tunnel')) {

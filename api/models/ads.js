@@ -11,6 +11,7 @@ module.exports = {
   props: {
     id: 'id',
     advertiserUserId: { ref: 'User' },
+    billboardId: { ref: 'Billboard' },
     name: 'string',
     description: 'string',
     type: { type: 'string', enum: ['text', 'image', 'video'], default: 'text' },
@@ -19,8 +20,7 @@ module.exports = {
     mediaUrl: 'url',
   },
   virtualProps: {
-    user() { return this.refs.user; },
-    billboard() { return this.refs.billboard; },
+    advertiserUser() { return this.refs.advertiserUser; },
   },
   complexRefs: {
     async billboard() { return Models.Billboard.find({ where: { currentAdId: this.id } }); },
