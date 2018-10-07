@@ -20,6 +20,7 @@ module.exports = {
     pixelHeight: 'int',
     price: 'money',
     taxRate: { type: 'percent', default: 0.05 },
+    contractId: 'string',
   },
   virtualProps: {
   },

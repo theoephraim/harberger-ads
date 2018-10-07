@@ -1,18 +1,31 @@
+const fs = require('fs');
+const path = require('path');
+const nconf = require('nconf');
 const _ = require('lodash');
 const { Models } = require('../models');
 
 const { validate } = require('../lib/validation-helpers');
 
+const iframeSrc = fs.readFileSync(path.resolve(`${__dirname}/../static/iframe.html`), 'utf-8');
+
+const API_URL = nconf.get('API_URL');
+const WEBSITE_URL = nconf.get('WEBSITE_URL');
+
 module.exports = function initRoutes(router) {
   router.get('/i', async (ctx, next) => {
-    const adId = ctx.request.query.a;
-    const ad = await Models.Ad.findById(adId);
+    const billboardId = ctx.request.query.b;
+    const billboard = await Models.Billboard.findById(billboardId);
+    const ad = await billboard.populateRef('currentAd');
     const impression = await Models.Impression.create({ adId: ad.id });
 
-    ctx.body = {
-      ..._.pick(ad, 'mediaUrl'),
-      impressionId: impression.id,
-    };
+    const impressionSrc = iframeSrc
+      .replace('{IMG_URL}', ad.mediaUrl)
+      .replace('{AD_URL}', `${API_URL}/c?i=${impression.id}`)
+      .replace('{HADS_URL}', WEBSITE_URL)
+      .replace('{BILLBOARD_ID}', billboard.id);
+
+    ctx.response.body = impressionSrc;
+    ctx.set('Content-type', 'text/html');
   });
 
   router.get('/c', async (ctx, next) => {

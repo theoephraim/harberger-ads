@@ -1,7 +1,7 @@
 <template lang='pug'>
 .overlay
   .overlay-screen
-  .overlay-content
+  .overlay-content(v-if="!processing")
     router-link.overlay-exit(:to="{name: 'home'}") &lt; Back
     h2.overlay-header List New Ad Space
     .overlay-form
@@ -59,10 +59,16 @@
       p.small Please <a href='#' @click.prevent='$store.dispatch("signIn")'>finish authentication</a> via metamask
 
 
+  .overlay-content(v-else)
+    .align-center
+      p.h1 Processing, confirm with MetaMask
+      div
+        p.sending.h1 ✨
+
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import { mapRequestStatuses } from '@/utils/vuex-api-utils';
 import { vuelidateGroupMixin } from '@/components/forms/vuelidate-group';
@@ -80,6 +86,7 @@ export default {
   data() {
     return {
       listing: {},
+      processing: false,
     };
   },
   computed: {
@@ -96,7 +103,27 @@ export default {
   methods: {
     saveButtonHandler() {
       if (this.$hasError()) return;
+      this.processing = true;
+      this.addProperty().then((data) => {
+        this.listing.contractId = data.events.Change.returnValues.id;
+        return this.createBillboard(this.listing);
+      }).then(() => {
+        this.processing = false;
+        this.cancel();
+      }).catch((err) => {
+        this.processing = false;
+        console.log('MM error.....');
+        console.log(err);
+      });
     },
+    cancel() {
+      this.$router.replace('/');
+    },
+
+    ...mapActions([
+      'addProperty',
+      'createBillboard',
+    ]),
   },
 };
 </script>

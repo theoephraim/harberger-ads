@@ -17,16 +17,18 @@ api.interceptors.request.use((config) => {
   // `state.adminAuthToken` only exists in admin "app" for now
   // but we should add it to the main app once we switch over all api calls
   // to the new API
-  if (window.store.state.adminAuthToken) {
-    config.headers['x-auth'] = `${window.store.state.adminAuthToken}`;
-  } else if (window.store.state.authToken) {
-    config.headers['x-auth'] = `${window.store.state.authToken}`;
+  if (window.store.getters.authHeader) {
+    config.headers.Authorization = window.store.getters.authHeader;
   }
   return config;
 });
 
 api.interceptors.request.use((config) => {
-  config.url = `/api${config.url}`;
+  if (config.url.indexOf('/gapi') === 0) {
+    config.headers['Content-Type'] = 'application/graphql';
+  } else {
+    config.url = `${config.url}`;
+  }
   return config;
 });
 
