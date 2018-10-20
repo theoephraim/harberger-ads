@@ -273,7 +273,7 @@ export default {
         }
         users {
           id
-          address
+          owner
           allowance
           balance
         }
@@ -297,9 +297,9 @@ export default {
   })),
 
   updateBillboardAd: makeAsyncAction(types.UPDATE_BILLBOARD_AD, (ctx, payload) => ({
-        method: 'post',
-        url: `/api/billboards/${payload.billboardId}/set-ad`,
-        params: _.omit(payload, 'billboardId'),
-    })),
+    method: 'post',
+    url: `/api/billboards/${payload.billboardId}/set-ad`,
+    params: _.omit(payload, 'billboardId'),
+  })),
 
 };
